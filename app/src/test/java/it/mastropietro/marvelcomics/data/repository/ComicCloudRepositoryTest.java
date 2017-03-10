@@ -10,6 +10,7 @@ import java.util.List;
 
 import it.mastropietro.marvelcomics.ComicRepository;
 import it.mastropietro.marvelcomics.data.TestUtils;
+import it.mastropietro.marvelcomics.data.entity.mapper.ComicMapper;
 import it.mastropietro.marvelcomics.model.Comic;
 import okhttp3.HttpUrl;
 import okhttp3.mockwebserver.MockResponse;
@@ -46,7 +47,7 @@ public class ComicCloudRepositoryTest {
     private static void setupComicCloudRepository() {
         HttpUrl baseUrl = mockWebServer.url("/");
         ComicService comicService = getRetrofit(baseUrl).create(ComicService.class);
-        cloudRepository = new ComicCloudRepository(FAKE_CHARACTER_ID, comicService);
+        cloudRepository = new ComicCloudRepository(FAKE_CHARACTER_ID, comicService, new ComicMapper());
     }
 
     private static Retrofit getRetrofit(HttpUrl baseUrl) {
