@@ -1,5 +1,7 @@
 package it.mastropietro.marvelcomics.data.repository;
 
+import android.support.annotation.NonNull;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -10,8 +12,11 @@ import java.util.List;
 import it.mastropietro.marvelcomics.ComicRepository;
 import it.mastropietro.marvelcomics.model.Comic;
 import rx.Observable;
+import rx.observers.TestSubscriber;
 
-import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -27,15 +32,29 @@ public class ComicDataRepositoryTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        when(cloudRepository.getComics()).thenReturn(Observable.<List<Comic>>empty());
+        when(cloudRepository.getComics()).thenReturn(getFakeComicsObservable());
         comicRepository = new ComicDataRepository(cloudRepository);
     }
 
     @Test
     public void whenGetComicsIsCalled_returnAnObservableOfComics() throws Exception {
         Observable<List<Comic>> comics = comicRepository.getComics();
+        TestSubscriber<List<Comic>> testSubscriber = new TestSubscriber<>();
+        comics.subscribe(testSubscriber);
 
         verify(cloudRepository).getComics();
         assertNotNull(comics);
+        testSubscriber.assertNoErrors();
+
+        List<List<Comic>> listsFromComicObservable = testSubscriber.getOnNextEvents();
+        assertThat(listsFromComicObservable.size(), is(1));
+        assertThat(listsFromComicObservable.get(0).size(), is(3));
+    }
+
+    @NonNull private Observable<List<Comic>> getFakeComicsObservable() {
+        Comic comic1 = new Comic.Builder().id(1).build();
+        Comic comic2 = new Comic.Builder().id(2).build();
+        Comic comic3 = new Comic.Builder().id(3).build();
+        return Observable.just(comic1, comic2, comic3).toList();
     }
 }
