@@ -9,6 +9,7 @@ import javax.inject.Inject;
 
 import it.mastropietro.marvelcomics.ComicRepository;
 import it.mastropietro.marvelcomics.data.entity.ComicEntity;
+import it.mastropietro.marvelcomics.data.entity.mapper.ComicMapper;
 import it.mastropietro.marvelcomics.model.Comic;
 import rx.Observable;
 import rx.Single;
@@ -23,12 +24,15 @@ class ComicCloudRepository implements ComicRepository {
 
     private final int characterId;
     private final ComicService comicService;
+    private final ComicMapper comicMapper;
 
     @Inject
     public ComicCloudRepository(int characterId,
-                                ComicService comicService) {
+                                ComicService comicService,
+                                ComicMapper comicMapper) {
         this.characterId = characterId;
         this.comicService = comicService;
+        this.comicMapper = comicMapper;
     }
 
     @Override public Single<List<Comic>> getComics() {
@@ -72,7 +76,7 @@ class ComicCloudRepository implements ComicRepository {
     @NonNull private Func1<ComicEntity, Comic> comicEntityToComic() {
         return new Func1<ComicEntity, Comic>() {
             @Override public Comic call(ComicEntity comicEntity) {
-                return new Comic.Builder().build();
+                return comicMapper.map(comicEntity);
             }
         };
     }
