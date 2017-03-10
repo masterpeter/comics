@@ -6,7 +6,7 @@ import java.util.List;
  * Created by Angelo Mastropietro on 10/03/17.
  */
 
-public class Comic {
+public final class Comic {
 
     private final int id;
     private final String title;
@@ -17,8 +17,52 @@ public class Comic {
     private final String seriesName;
     private final List<ComicDate> comicDates;
     private final List<ComicPrice> comicPrices;
-    private final List<ComicImage> thumbnails;
-    private final CharacterList characterList;
+    private final List<String> thumbnails;
+    private final List<CharacterSummary> characterList;
+
+    public int getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public String getFormat() {
+        return format;
+    }
+
+    public int getPageCount() {
+        return pageCount;
+    }
+
+    public String getSeriesName() {
+        return seriesName;
+    }
+
+    public List<ComicDate> getComicDates() {
+        return comicDates;
+    }
+
+    public List<ComicPrice> getComicPrices() {
+        return comicPrices;
+    }
+
+    public List<String> getThumbnails() {
+        return thumbnails;
+    }
+
+    public List<CharacterSummary> getCharacterList() {
+        return characterList;
+    }
 
     private Comic(Builder builder) {
         this.id = builder.id;
@@ -44,8 +88,8 @@ public class Comic {
         private String seriesName;
         private List<ComicDate> comicDates;
         private List<ComicPrice> comicPrices;
-        private List<ComicImage> thumbnails;
-        private CharacterList characterList;
+        private List<String> thumbnails;
+        private List<CharacterSummary> characterList;
 
         public Builder() {
         }
@@ -95,12 +139,12 @@ public class Comic {
             return this;
         }
 
-        public Builder thumbnails(List<ComicImage> thumbnails) {
+        public Builder thumbnails(List<String> thumbnails) {
             this.thumbnails = thumbnails;
             return this;
         }
 
-        public Builder characterList(CharacterList characterList) {
+        public Builder characterList(List<CharacterSummary> characterList) {
             this.characterList = characterList;
             return this;
         }
