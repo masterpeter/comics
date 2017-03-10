@@ -8,7 +8,7 @@ import java.util.List;
  * Created by Angelo Mastropietro on 10/03/17.
  */
 
-class ComicDataEntity {
+public class ComicDataEntity {
 
     @SerializedName("offset") private int offset;
     @SerializedName("limit") private int limit;

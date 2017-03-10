@@ -8,7 +8,7 @@ import java.util.List;
  * Created by Angelo Mastropietro on 10/03/17.
  */
 
-class CharacterSummaryEntity {
+public class CharacterSummaryEntity {
 
     @SerializedName("items") private List<CharacterEntity> characters;
 

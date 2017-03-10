@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by Angelo Mastropietro on 10/03/17.
  */
 
-class ComicEntityPrice {
+public class ComicEntityPrice {
 
     @SerializedName("type") private String type;
     @SerializedName("price") private float price;

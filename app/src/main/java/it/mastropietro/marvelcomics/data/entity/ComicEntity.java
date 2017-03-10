@@ -8,7 +8,7 @@ import java.util.List;
  * Created by Angelo Mastropietro on 10/03/17.
  */
 
-class ComicEntity {
+public class ComicEntity {
 
     @SerializedName("id") private int id;
     @SerializedName("title") private String title;

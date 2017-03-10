@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by Angelo Mastropietro on 10/03/17.
  */
 
-class ComicSeriesEntity {
+public class ComicSeriesEntity {
 
     @SerializedName("name") private String name;
 
