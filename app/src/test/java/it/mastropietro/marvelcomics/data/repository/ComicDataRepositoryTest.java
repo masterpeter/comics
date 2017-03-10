@@ -7,11 +7,12 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import it.mastropietro.marvelcomics.ComicRepository;
 import it.mastropietro.marvelcomics.model.Comic;
-import rx.Observable;
+import rx.Single;
 import rx.observers.TestSubscriber;
 
 import static org.hamcrest.Matchers.is;
@@ -38,7 +39,7 @@ public class ComicDataRepositoryTest {
 
     @Test
     public void whenGetComicsIsCalled_returnAnObservableOfComics() throws Exception {
-        Observable<List<Comic>> comics = comicRepository.getComics();
+        Single<List<Comic>> comics = comicRepository.getComics();
         TestSubscriber<List<Comic>> testSubscriber = new TestSubscriber<>();
         comics.subscribe(testSubscriber);
 
@@ -51,10 +52,11 @@ public class ComicDataRepositoryTest {
         assertThat(listsFromComicObservable.get(0).size(), is(3));
     }
 
-    @NonNull private Observable<List<Comic>> getFakeComicsObservable() {
-        Comic comic1 = new Comic.Builder().id(1).build();
-        Comic comic2 = new Comic.Builder().id(2).build();
-        Comic comic3 = new Comic.Builder().id(3).build();
-        return Observable.just(comic1, comic2, comic3).toList();
+    @NonNull private Single<List<Comic>> getFakeComicsObservable() {
+        List<Comic> comicList = new ArrayList<>();
+        comicList.add(new Comic.Builder().id(1).build());
+        comicList.add(new Comic.Builder().id(2).build());
+        comicList.add(new Comic.Builder().id(3).build());
+        return Single.just(comicList);
     }
 }

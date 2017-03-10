@@ -7,7 +7,7 @@ import javax.inject.Named;
 
 import it.mastropietro.marvelcomics.ComicRepository;
 import it.mastropietro.marvelcomics.model.Comic;
-import rx.Observable;
+import rx.Single;
 
 /**
  * Created by Angelo Mastropietro on 10/03/17.
@@ -15,14 +15,14 @@ import rx.Observable;
 
 public class ComicDataRepository implements ComicRepository {
 
-    ComicRepository cloudRepo;
+    private final ComicRepository cloudRepo;
 
     @Inject
     public ComicDataRepository(@Named("cloudRepo") ComicRepository cloudRepo) {
         this.cloudRepo = cloudRepo;
     }
 
-    @Override public Observable<List<Comic>> getComics() {
+    @Override public Single<List<Comic>> getComics() {
         return cloudRepo.getComics();
     }
 }
