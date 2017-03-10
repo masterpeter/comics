@@ -7,9 +7,9 @@ package it.mastropietro.marvelcomics.model;
 public final class ComicPrice {
 
     private final String type;
-    private final float price;
+    private final String price;
 
-    public ComicPrice(String type, float price) {
+    public ComicPrice(String type, String price) {
         this.type = type;
         this.price = price;
     }
@@ -18,7 +18,7 @@ public final class ComicPrice {
         return type;
     }
 
-    public float getPrice() {
+    public String getPrice() {
         return price;
     }
 
@@ -28,14 +28,14 @@ public final class ComicPrice {
 
         ComicPrice that = (ComicPrice) o;
 
-        if (Float.compare(that.price, price) != 0) return false;
-        return type != null ? type.equals(that.type) : that.type == null;
+        if (type != null ? !type.equals(that.type) : that.type != null) return false;
+        return price != null ? price.equals(that.price) : that.price == null;
 
     }
 
     @Override public int hashCode() {
         int result = type != null ? type.hashCode() : 0;
-        result = 31 * result + (price != +0.0f ? Float.floatToIntBits(price) : 0);
+        result = 31 * result + (price != null ? price.hashCode() : 0);
         return result;
     }
 }

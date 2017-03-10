@@ -1,7 +1,5 @@
 package it.mastropietro.marvelcomics.model;
 
-import java.util.Date;
-
 /**
  * Created by Angelo Mastropietro on 10/03/17.
  */
@@ -9,9 +7,9 @@ import java.util.Date;
 public final class ComicDate {
 
     private final String type;
-    private final Date date;
+    private final String date;
 
-    public ComicDate(String type, Date date) {
+    public ComicDate(String type, String date) {
         this.type = type;
         this.date = date;
     }
@@ -20,7 +18,7 @@ public final class ComicDate {
         return type;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
@@ -31,9 +29,8 @@ public final class ComicDate {
         ComicDate comicDate = (ComicDate) o;
 
         if (type != null ? !type.equals(comicDate.type) : comicDate.type != null) return false;
-        if (date != null ? !date.equals(comicDate.date) : comicDate.date != null) return false;
+        return date != null ? date.equals(comicDate.date) : comicDate.date == null;
 
-        return true;
     }
 
     @Override public int hashCode() {

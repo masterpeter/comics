@@ -13,12 +13,13 @@ public final class Comic {
     private final String description;
     private final String isbn;
     private final String format;
-    private final int pageCount;
+    private final String pageCount;
     private final String seriesName;
+    private final String thumbnail;
     private final List<ComicDate> comicDates;
     private final List<ComicPrice> comicPrices;
     private final List<String> thumbnails;
-    private final List<CharacterSummary> characterList;
+    private final List<String> characters;
 
     public int getId() {
         return id;
@@ -40,7 +41,11 @@ public final class Comic {
         return format;
     }
 
-    public int getPageCount() {
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public String getPageCount() {
         return pageCount;
     }
 
@@ -56,12 +61,12 @@ public final class Comic {
         return comicPrices;
     }
 
-    public List<String> getThumbnails() {
+    public List<String> getImages() {
         return thumbnails;
     }
 
-    public List<CharacterSummary> getCharacterList() {
-        return characterList;
+    public List<String> getCharacters() {
+        return characters;
     }
 
     private Comic(Builder builder) {
@@ -70,12 +75,13 @@ public final class Comic {
         this.description = builder.description;
         this.isbn = builder.isbn;
         this.format = builder.format;
+        this.thumbnail = builder.thumbnail;
         this.pageCount = builder.pageCount;
         this.seriesName = builder.seriesName;
         this.comicDates = builder.comicDates;
         this.comicPrices = builder.comicPrices;
-        this.thumbnails = builder.thumbnails;
-        this.characterList = builder.characterList;
+        this.thumbnails = builder.images;
+        this.characters = builder.characterList;
     }
 
     public static final class Builder {
@@ -84,12 +90,13 @@ public final class Comic {
         private String description;
         private String isbn;
         private String format;
-        private int pageCount;
+        private String pageCount;
         private String seriesName;
+        private String thumbnail;
         private List<ComicDate> comicDates;
         private List<ComicPrice> comicPrices;
-        private List<String> thumbnails;
-        private List<CharacterSummary> characterList;
+        private List<String> images;
+        private List<String> characterList;
 
         public Builder() {
         }
@@ -119,8 +126,13 @@ public final class Comic {
             return this;
         }
 
-        public Builder pageCount(int pageCount) {
+        public Builder pageCount(String pageCount) {
             this.pageCount = pageCount;
+            return this;
+        }
+
+        public Builder thumbnail(String thumbnail) {
+            this.thumbnail = thumbnail;
             return this;
         }
 
@@ -139,12 +151,12 @@ public final class Comic {
             return this;
         }
 
-        public Builder thumbnails(List<String> thumbnails) {
-            this.thumbnails = thumbnails;
+        public Builder images(List<String> images) {
+            this.images = images;
             return this;
         }
 
-        public Builder characterList(List<CharacterSummary> characterList) {
+        public Builder characterList(List<String> characterList) {
             this.characterList = characterList;
             return this;
         }
@@ -161,13 +173,16 @@ public final class Comic {
         Comic comic = (Comic) o;
 
         if (id != comic.id) return false;
-        if (pageCount != comic.pageCount) return false;
         if (title != null ? !title.equals(comic.title) : comic.title != null) return false;
         if (description != null ? !description.equals(comic.description) : comic.description != null)
             return false;
         if (isbn != null ? !isbn.equals(comic.isbn) : comic.isbn != null) return false;
         if (format != null ? !format.equals(comic.format) : comic.format != null) return false;
+        if (pageCount != null ? !pageCount.equals(comic.pageCount) : comic.pageCount != null)
+            return false;
         if (seriesName != null ? !seriesName.equals(comic.seriesName) : comic.seriesName != null)
+            return false;
+        if (thumbnail != null ? !thumbnail.equals(comic.thumbnail) : comic.thumbnail != null)
             return false;
         if (comicDates != null ? !comicDates.equals(comic.comicDates) : comic.comicDates != null)
             return false;
@@ -175,7 +190,7 @@ public final class Comic {
             return false;
         if (thumbnails != null ? !thumbnails.equals(comic.thumbnails) : comic.thumbnails != null)
             return false;
-        return characterList != null ? characterList.equals(comic.characterList) : comic.characterList == null;
+        return characters != null ? characters.equals(comic.characters) : comic.characters == null;
 
     }
 
@@ -185,12 +200,13 @@ public final class Comic {
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (isbn != null ? isbn.hashCode() : 0);
         result = 31 * result + (format != null ? format.hashCode() : 0);
-        result = 31 * result + pageCount;
+        result = 31 * result + (pageCount != null ? pageCount.hashCode() : 0);
         result = 31 * result + (seriesName != null ? seriesName.hashCode() : 0);
+        result = 31 * result + (thumbnail != null ? thumbnail.hashCode() : 0);
         result = 31 * result + (comicDates != null ? comicDates.hashCode() : 0);
         result = 31 * result + (comicPrices != null ? comicPrices.hashCode() : 0);
         result = 31 * result + (thumbnails != null ? thumbnails.hashCode() : 0);
-        result = 31 * result + (characterList != null ? characterList.hashCode() : 0);
+        result = 31 * result + (characters != null ? characters.hashCode() : 0);
         return result;
     }
 }
