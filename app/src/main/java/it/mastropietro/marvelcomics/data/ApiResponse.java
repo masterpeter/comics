@@ -1,4 +1,4 @@
-package it.mastropietro.marvelcomics.data.entity;
+package it.mastropietro.marvelcomics.data;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -6,11 +6,11 @@ import com.google.gson.annotations.SerializedName;
  * Created by Angelo Mastropietro on 10/03/17.
  */
 
-public class ApiResponse {
+public class ApiResponse<T> {
 
     @SerializedName("code") private int code;
     @SerializedName("status") private String status;
-    @SerializedName("data") private ComicDataEntity data;
+    @SerializedName("data") private T data;
 
     public int getCode() {
         return code;
@@ -20,7 +20,7 @@ public class ApiResponse {
         return status;
     }
 
-    public ComicDataEntity getData() {
+    public T getData() {
         return data;
     }
 
