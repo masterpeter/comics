@@ -16,10 +16,11 @@ public class ComicEntity {
     @SerializedName("isbn") private String isbn;
     @SerializedName("format") private String format;
     @SerializedName("pageCount") private int pageCount;
-    @SerializedName("seriesName") private ComicSeriesEntity seriesName;
+    @SerializedName("series") private ComicSeriesEntity seriesName;
     @SerializedName("dates") private List<ComicEntityDate> comicDates;
     @SerializedName("prices") private List<ComicEntityPrice> comicPrices;
-    @SerializedName("images") private List<ComicThumbnailEntity> thumbnails;
+    @SerializedName("thumbnail") private ComicImageEntity comicThumbnail;
+    @SerializedName("images") private List<ComicImageEntity> comicImages;
     @SerializedName("characters") private CharacterSummaryEntity characterSummary;
 
     public int getId() {
@@ -58,8 +59,12 @@ public class ComicEntity {
         return comicPrices;
     }
 
-    public List<ComicThumbnailEntity> getThumbnails() {
-        return thumbnails;
+    public List<ComicImageEntity> getComicImages() {
+        return comicImages;
+    }
+
+    public ComicImageEntity getComicThumbnail() {
+        return comicThumbnail;
     }
 
     public CharacterSummaryEntity getCharacterSummary() {
@@ -85,12 +90,12 @@ public class ComicEntity {
             return false;
         if (comicPrices != null ? !comicPrices.equals(that.comicPrices) : that.comicPrices != null)
             return false;
-        if (thumbnails != null ? !thumbnails.equals(that.thumbnails) : that.thumbnails != null)
+        if (comicThumbnail != null ? !comicThumbnail.equals(that.comicThumbnail) : that.comicThumbnail != null)
             return false;
-        if (characterSummary != null ? !characterSummary.equals(that.characterSummary) : that.characterSummary != null)
+        if (comicImages != null ? !comicImages.equals(that.comicImages) : that.comicImages != null)
             return false;
+        return characterSummary != null ? characterSummary.equals(that.characterSummary) : that.characterSummary == null;
 
-        return true;
     }
 
     @Override public int hashCode() {
@@ -103,7 +108,8 @@ public class ComicEntity {
         result = 31 * result + (seriesName != null ? seriesName.hashCode() : 0);
         result = 31 * result + (comicDates != null ? comicDates.hashCode() : 0);
         result = 31 * result + (comicPrices != null ? comicPrices.hashCode() : 0);
-        result = 31 * result + (thumbnails != null ? thumbnails.hashCode() : 0);
+        result = 31 * result + (comicThumbnail != null ? comicThumbnail.hashCode() : 0);
+        result = 31 * result + (comicImages != null ? comicImages.hashCode() : 0);
         result = 31 * result + (characterSummary != null ? characterSummary.hashCode() : 0);
         return result;
     }

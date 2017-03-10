@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by Angelo Mastropietro on 10/03/17.
  */
 
-public class ComicThumbnailEntity {
+public class ComicImageEntity {
 
     @SerializedName("path") private String path;
     @SerializedName("extension") private String fileExt;

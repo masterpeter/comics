@@ -9,13 +9,9 @@ import com.google.gson.annotations.SerializedName;
 public class CharacterEntity {
 
     @SerializedName("name") private String name;
-    @SerializedName("role") private String role;
 
     public String getName() {
         return name;
     }
 
-    public String getRole() {
-        return role;
-    }
 }

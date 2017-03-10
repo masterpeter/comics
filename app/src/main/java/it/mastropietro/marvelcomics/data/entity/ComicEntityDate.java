@@ -2,6 +2,8 @@ package it.mastropietro.marvelcomics.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 /**
  * Created by Angelo Mastropietro on 10/03/17.
  */
@@ -9,13 +11,13 @@ import com.google.gson.annotations.SerializedName;
 public class ComicEntityDate {
 
     @SerializedName("type") private String type;
-    @SerializedName("date") private String date;
+    @SerializedName("date") private Date date;
 
     public String getType() {
         return type;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 }
