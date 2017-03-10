@@ -20,7 +20,7 @@ class ComicEntity {
     @SerializedName("dates") private List<ComicEntityDate> comicDates;
     @SerializedName("prices") private List<ComicEntityPrice> comicPrices;
     @SerializedName("images") private List<ComicThumbnailEntity> thumbnails;
-    @SerializedName("characters") private CharacterSummaryEntity characters;
+    @SerializedName("characters") private CharacterSummaryEntity characterSummary;
 
     public int getId() {
         return id;
@@ -62,8 +62,8 @@ class ComicEntity {
         return thumbnails;
     }
 
-    public CharacterSummaryEntity getCharacters() {
-        return characters;
+    public CharacterSummaryEntity getCharacterSummary() {
+        return characterSummary;
     }
 
     @Override public boolean equals(Object o) {
@@ -87,7 +87,7 @@ class ComicEntity {
             return false;
         if (thumbnails != null ? !thumbnails.equals(that.thumbnails) : that.thumbnails != null)
             return false;
-        if (characters != null ? !characters.equals(that.characters) : that.characters != null)
+        if (characterSummary != null ? !characterSummary.equals(that.characterSummary) : that.characterSummary != null)
             return false;
 
         return true;
@@ -104,7 +104,7 @@ class ComicEntity {
         result = 31 * result + (comicDates != null ? comicDates.hashCode() : 0);
         result = 31 * result + (comicPrices != null ? comicPrices.hashCode() : 0);
         result = 31 * result + (thumbnails != null ? thumbnails.hashCode() : 0);
-        result = 31 * result + (characters != null ? characters.hashCode() : 0);
+        result = 31 * result + (characterSummary != null ? characterSummary.hashCode() : 0);
         return result;
     }
 }
