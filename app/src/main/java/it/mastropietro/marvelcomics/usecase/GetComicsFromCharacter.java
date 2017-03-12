@@ -1,6 +1,5 @@
 package it.mastropietro.marvelcomics.usecase;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 
 import rx.Scheduler;
@@ -12,10 +11,12 @@ import rx.Single;
 
 public class GetComicsFromCharacter extends UseCase {
 
+    private static final int COMIC_LIMIT = 20;
+
+    private int pageNumber;
     private final int characterId;
     private final ComicRepository comicRepository;
 
-    @Inject
     public GetComicsFromCharacter(int characterId,
                                   @Named("dataRepo") ComicRepository comicRepository,
                                   @Named("backgroundThread") Scheduler backgroundThread,
@@ -27,5 +28,9 @@ public class GetComicsFromCharacter extends UseCase {
 
     @Override protected Single buildObservable() {
         return comicRepository.getComics(characterId);
+    }
+
+    public void setPageNumber(int pageNumber) {
+        this.pageNumber = pageNumber;
     }
 }
