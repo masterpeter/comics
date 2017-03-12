@@ -7,11 +7,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Singleton;
 
 /**
  * Created by Angelo Mastropietro on 11/03/17.
  */
-
+@Singleton
 class ApiKeyProvider {
 
     private Clock clock;
@@ -20,8 +22,8 @@ class ApiKeyProvider {
 
     @Inject
     public ApiKeyProvider(Clock clock,
-                          String publicKey,
-                          String privateKey) {
+                          @Named("publicKey") String publicKey,
+                          @Named("privateKey") String privateKey) {
         this.clock = clock;
         this.publicKey = publicKey;
         this.privateKey = privateKey;

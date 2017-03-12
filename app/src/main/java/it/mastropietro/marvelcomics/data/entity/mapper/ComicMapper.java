@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import it.mastropietro.marvelcomics.data.entity.CharacterEntity;
 import it.mastropietro.marvelcomics.data.entity.CharacterSummaryEntity;
 import it.mastropietro.marvelcomics.data.entity.ComicEntity;
@@ -18,11 +21,15 @@ import it.mastropietro.marvelcomics.model.ComicPrice;
 /**
  * Created by Angelo Mastropietro on 10/03/17.
  */
-
+@Singleton
 public class ComicMapper implements Mapper<ComicEntity, Comic> {
 
     // Is there something that is not optional in Marvel APIs docs? :D
     private static final String NOT_AVAILABLE = "N/A";
+
+    @Inject
+    public ComicMapper() {
+    }
 
     @Override public Comic map(ComicEntity comicEntity) {
         return new Comic.Builder()

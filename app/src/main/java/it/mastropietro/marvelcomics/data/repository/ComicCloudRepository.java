@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Singleton;
 
 import it.mastropietro.marvelcomics.ComicRepository;
 import it.mastropietro.marvelcomics.data.entity.ComicEntity;
@@ -19,8 +21,8 @@ import rx.functions.Func1;
 /**
  * Created by Angelo Mastropietro on 10/03/17.
  */
-
-class ComicCloudRepository implements ComicRepository {
+@Singleton @Named("cloudRepo")
+public class ComicCloudRepository implements ComicRepository {
 
     private final ComicService comicService;
     private final ComicMapper comicMapper;
