@@ -34,7 +34,7 @@ public class GetComicsFromCharacterTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        when(comicRepository.getComics(anyInt())).thenAnswer(getComicListAnswer());
+        when(comicRepository.getComics(anyInt(), anyInt())).thenAnswer(getComicListAnswer());
     }
 
     @NonNull private Answer<Single<ArrayList<Comic>>> getComicListAnswer() {
@@ -53,6 +53,6 @@ public class GetComicsFromCharacterTest {
 
         getComics.execute(subscriber);
 
-        verify(comicRepository).getComics(anyInt());
+        verify(comicRepository).getComics(anyInt(), anyInt());
     }
 }

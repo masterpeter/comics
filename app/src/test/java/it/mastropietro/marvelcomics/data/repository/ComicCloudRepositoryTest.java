@@ -69,14 +69,14 @@ public class ComicCloudRepositoryTest {
 
     @Test
     public void whenGetCountryIsCalledFromCloud_returnAnObservableWithComics() throws Exception {
-        Single<List<Comic>> singleComicList = cloudRepository.getComics(FAKE_CHARACTER_ID);
+        Single<List<Comic>> singleComicList = cloudRepository.getComics(FAKE_CHARACTER_ID, 0);
 
         assertNotNull(singleComicList);
     }
 
     @Test
     public void whenGetCountryIsCalledFromCloud_returnSingleWithExactlyOneList() throws Exception {
-        Single<List<Comic>> singleComicList = cloudRepository.getComics(FAKE_CHARACTER_ID);
+        Single<List<Comic>> singleComicList = cloudRepository.getComics(FAKE_CHARACTER_ID, 0);
 
         TestSubscriber<List<Comic>> testSubscriber = new TestSubscriber<>();
         singleComicList.subscribe(testSubscriber);
@@ -87,7 +87,7 @@ public class ComicCloudRepositoryTest {
 
     @Test
     public void whenGetCountryIsCalledFromCloud_returnExpectedItems() throws Exception {
-        Single<List<Comic>> singleComicList = cloudRepository.getComics(FAKE_CHARACTER_ID);
+        Single<List<Comic>> singleComicList = cloudRepository.getComics(FAKE_CHARACTER_ID, 0);
 
         TestSubscriber<List<Comic>> testSubscriber = new TestSubscriber<>();
         singleComicList.subscribe(testSubscriber);

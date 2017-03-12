@@ -34,17 +34,17 @@ public class ComicDataRepositoryTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        when(cloudRepository.getComics(FAKE_CHARACTER_ID)).thenReturn(getFakeComicsObservable());
+        when(cloudRepository.getComics(FAKE_CHARACTER_ID, 0)).thenReturn(getFakeComicsObservable());
         comicRepository = new ComicDataRepository(cloudRepository);
     }
 
     @Test
     public void whenGetComicsIsCalled_returnAnObservableOfComics() throws Exception {
-        Single<List<Comic>> comics = comicRepository.getComics(FAKE_CHARACTER_ID);
+        Single<List<Comic>> comics = comicRepository.getComics(FAKE_CHARACTER_ID, 0);
         TestSubscriber<List<Comic>> testSubscriber = new TestSubscriber<>();
         comics.subscribe(testSubscriber);
 
-        verify(cloudRepository).getComics(FAKE_CHARACTER_ID);
+        verify(cloudRepository).getComics(FAKE_CHARACTER_ID, 0);
         assertNotNull(comics);
         testSubscriber.assertNoErrors();
 

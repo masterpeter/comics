@@ -12,11 +12,13 @@ import java.util.List;
 
 import it.mastropietro.marvelcomics.model.Comic;
 import it.mastropietro.marvelcomics.usecase.UseCase;
-import rx.Scheduler;
+import it.mastropietro.marvelcomics.usecase.UseCaseFactory;
 import rx.Single;
 import rx.schedulers.Schedulers;
 
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by Angelo Mastropietro on 12/03/17.
@@ -24,18 +26,17 @@ import static org.mockito.Mockito.verify;
 public class MasterPresenterTest {
 
     @Mock MasterContract.View viewModel;
-
-    private UseCase getComics;
+    @Mock UseCaseFactory<Integer> factory;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        getComics = new FakeUseCase(Schedulers.io(), Schedulers.immediate());
+        when(factory.createUseCase(anyInt())).thenReturn(buildUseCase());
     }
 
     @SuppressWarnings("unchecked") @Test
     public void whenPresenterStarts_executeUseCaseToRetrieveComics() throws Exception {
-        MasterPresenter presenter = new MasterPresenter(getComics, viewModel);
+        MasterPresenter presenter = new MasterPresenter(factory, viewModel);
 
         presenter.start();
 
@@ -46,23 +47,21 @@ public class MasterPresenterTest {
     @Test
     public void whenPresenterStops_unsubscribeFromUseCase() throws Exception {
         UseCase mockUseCase = Mockito.mock(UseCase.class);
-        MasterPresenter presenter = new MasterPresenter(mockUseCase, viewModel);
+        MasterPresenter presenter = new MasterPresenter(factory, viewModel);
+        presenter.getComicsFromCharacterId = mockUseCase;
 
         presenter.stop();
 
         verify(mockUseCase).unsubscribe();
     }
 
-    private static class FakeUseCase extends UseCase {
-
-        FakeUseCase(Scheduler backgroundThread, Scheduler mainThread) {
-            super(backgroundThread, mainThread);
-        }
-
-        @Override protected Single buildObservable() {
-            List<Comic> comicList = new ArrayList<>();
-            comicList.add(new Comic.Builder().build());
-            return Single.just(comicList);
-        }
+    private UseCase buildUseCase() {
+        return new UseCase(Schedulers.io(), Schedulers.immediate()) {
+            @Override protected Single buildObservable() {
+                List<Comic> comicList = new ArrayList<>();
+                comicList.add(new Comic.Builder().build());
+                return Single.just(comicList);
+            }
+        };
     }
 }

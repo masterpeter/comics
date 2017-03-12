@@ -21,7 +21,7 @@ class MasterPresenter implements MasterContract.Presenter {
     private UseCaseFactory<Integer> getComicsUseCaseFactory;
     private MasterContract.View viewModel;
     private int pageNumber;
-    private UseCase getComicsFromCharacterId;
+    UseCase getComicsFromCharacterId;
 
     @Inject
     public MasterPresenter(@Named("comicsUseCaseFactory") UseCaseFactory<Integer> getComicsUseCaseFactory,
