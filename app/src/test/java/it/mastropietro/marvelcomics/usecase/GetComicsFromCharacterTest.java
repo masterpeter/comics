@@ -11,7 +11,6 @@ import org.mockito.stubbing.Answer;
 
 import java.util.ArrayList;
 
-import it.mastropietro.marvelcomics.ComicRepository;
 import it.mastropietro.marvelcomics.model.Comic;
 import rx.Single;
 import rx.observers.TestSubscriber;

@@ -7,7 +7,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import it.mastropietro.marvelcomics.ComicRepository;
+import it.mastropietro.marvelcomics.usecase.ComicRepository;
 import it.mastropietro.marvelcomics.data.entity.ComicEntity;
 import it.mastropietro.marvelcomics.data.entity.mapper.ComicMapper;
 import it.mastropietro.marvelcomics.model.Comic;

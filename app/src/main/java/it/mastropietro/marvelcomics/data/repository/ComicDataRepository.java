@@ -5,7 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import it.mastropietro.marvelcomics.ComicRepository;
+import it.mastropietro.marvelcomics.usecase.ComicRepository;
 import it.mastropietro.marvelcomics.model.Comic;
 import rx.Single;
 

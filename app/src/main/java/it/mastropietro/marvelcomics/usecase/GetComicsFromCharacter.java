@@ -2,7 +2,6 @@ package it.mastropietro.marvelcomics.usecase;
 
 import javax.inject.Inject;
 
-import it.mastropietro.marvelcomics.ComicRepository;
 import rx.Scheduler;
 import rx.Single;
 

@@ -10,7 +10,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.mastropietro.marvelcomics.ComicRepository;
+import it.mastropietro.marvelcomics.usecase.ComicRepository;
 import it.mastropietro.marvelcomics.model.Comic;
 import rx.Single;
 import rx.observers.TestSubscriber;
