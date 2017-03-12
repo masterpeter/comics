@@ -17,9 +17,12 @@ import it.mastropietro.marvelcomics.model.Comic;
 import it.mastropietro.marvelcomics.ui.di.DaggerMasterComponent;
 import it.mastropietro.marvelcomics.ui.di.MasterModule;
 
+import static it.mastropietro.marvelcomics.ui.ComicListAdapter.OnComicClickListener;
+import static it.mastropietro.marvelcomics.ui.ComicListAdapter.OnLastItemReachedListener;
+
 public class MasterActivity
         extends AppCompatActivity
-        implements ComicListAdapter.OnComicClickListener, MasterContract.View {
+        implements MasterContract.View, OnComicClickListener, OnLastItemReachedListener {
 
     private static final String TAG = MasterActivity.class.getName();
 
@@ -52,6 +55,7 @@ public class MasterActivity
     private void initRecyclerView() {
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
         listAdapter.setOnComicClickListener(this);
+        listAdapter.setOnLastItemReachedListener(this);
         comicList.setAdapter(listAdapter);
         comicList.setLayoutManager(layoutManager);
     }
@@ -70,5 +74,9 @@ public class MasterActivity
 
     @Override public void showError() {
 
+    }
+
+    @Override public void onLastItemReached() {
+        presenter.getMoreComics();
     }
 }
