@@ -5,8 +5,8 @@ import javax.inject.Named;
 import dagger.Module;
 import dagger.Provides;
 import it.mastropietro.marvelcomics.ui.MasterContract;
-import it.mastropietro.marvelcomics.usecase.GetComicsFromCharacter;
-import it.mastropietro.marvelcomics.usecase.UseCase;
+import it.mastropietro.marvelcomics.usecase.ComicsUseCaseFactory;
+import it.mastropietro.marvelcomics.usecase.UseCaseFactory;
 import rx.Scheduler;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -24,9 +24,9 @@ public class MasterModule {
         this.viewModel = viewModel;
     }
 
-    @Provides @Named("getComics")
-    UseCase provideGetComicsUseCase(GetComicsFromCharacter useCase) {
-        return useCase;
+    @Provides @Named("comicsUseCaseFactory")
+    UseCaseFactory<Integer> provideGetComicsUseCase(ComicsUseCaseFactory useCaseFactory) {
+        return useCaseFactory;
     }
 
     @Provides MasterContract.View provideViewModel() {
