@@ -2,6 +2,7 @@ package it.mastropietro.marvelcomics.usecase;
 
 import rx.Scheduler;
 import rx.Single;
+import rx.Subscriber;
 import rx.Subscription;
 
 /**
@@ -12,7 +13,7 @@ abstract class UseCase {
 
     private Scheduler backgroundThread;
     private Scheduler mainThread;
-    private Subscription subscription;
+    Subscription subscription;
 
     UseCase(Scheduler backgroundThread,
             Scheduler mainThread) {
@@ -22,11 +23,12 @@ abstract class UseCase {
 
     protected abstract Single buildObservable();
 
-    public void execute() {
+    @SuppressWarnings("unchecked")
+    public void execute(Subscriber subscriber) {
         subscription = buildObservable()
                 .subscribeOn(backgroundThread)
                 .observeOn(mainThread)
-                .subscribe();
+                .subscribe(subscriber);
     }
 
     public void unsubscribe() {
