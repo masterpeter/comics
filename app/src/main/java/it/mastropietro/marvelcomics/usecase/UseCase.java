@@ -9,14 +9,14 @@ import rx.Subscription;
  * Created by Angelo Mastropietro on 11/03/17.
  */
 
-abstract class UseCase {
+public abstract class UseCase {
 
     private Scheduler backgroundThread;
     private Scheduler mainThread;
     Subscription subscription;
 
-    UseCase(Scheduler backgroundThread,
-            Scheduler mainThread) {
+    protected UseCase(Scheduler backgroundThread,
+                      Scheduler mainThread) {
         this.backgroundThread = backgroundThread;
         this.mainThread = mainThread;
     }
