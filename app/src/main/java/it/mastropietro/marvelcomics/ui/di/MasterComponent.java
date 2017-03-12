@@ -4,7 +4,7 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import it.mastropietro.marvelcomics.data.di.RepositoryModule;
-import it.mastropietro.marvelcomics.ui.MasterActivity;
+import it.mastropietro.marvelcomics.ui.master.MasterActivity;
 
 /**
  * Created by Angelo Mastropietro on 12/03/17.

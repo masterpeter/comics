@@ -4,7 +4,7 @@ import javax.inject.Named;
 
 import dagger.Module;
 import dagger.Provides;
-import it.mastropietro.marvelcomics.ui.MasterContract;
+import it.mastropietro.marvelcomics.ui.master.MasterContract;
 import it.mastropietro.marvelcomics.usecase.ComicsUseCaseFactory;
 import it.mastropietro.marvelcomics.usecase.UseCaseFactory;
 import rx.Scheduler;

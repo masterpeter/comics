@@ -1,4 +1,4 @@
-package it.mastropietro.marvelcomics.ui;
+package it.mastropietro.marvelcomics.ui.master;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,12 +17,9 @@ import it.mastropietro.marvelcomics.model.Comic;
 import it.mastropietro.marvelcomics.ui.di.DaggerMasterComponent;
 import it.mastropietro.marvelcomics.ui.di.MasterModule;
 
-import static it.mastropietro.marvelcomics.ui.ComicListAdapter.OnComicClickListener;
-import static it.mastropietro.marvelcomics.ui.ComicListAdapter.OnLastItemReachedListener;
-
 public class MasterActivity
         extends AppCompatActivity
-        implements MasterContract.View, OnComicClickListener, OnLastItemReachedListener {
+        implements MasterContract.View, ComicListAdapter.OnComicClickListener, ComicListAdapter.OnLastItemReachedListener {
 
     private static final String TAG = MasterActivity.class.getName();
 

@@ -1,4 +1,4 @@
-package it.mastropietro.marvelcomics.ui;
+package it.mastropietro.marvelcomics.ui.master;
 
 import android.util.Log;
 

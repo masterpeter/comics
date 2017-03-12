@@ -1,4 +1,4 @@
-package it.mastropietro.marvelcomics.ui;
+package it.mastropietro.marvelcomics.ui.master;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.mastropietro.marvelcomics.model.Comic;
+import it.mastropietro.marvelcomics.ui.master.MasterContract;
+import it.mastropietro.marvelcomics.ui.master.MasterPresenter;
 import it.mastropietro.marvelcomics.usecase.UseCase;
 import it.mastropietro.marvelcomics.usecase.UseCaseFactory;
 import rx.Single;
