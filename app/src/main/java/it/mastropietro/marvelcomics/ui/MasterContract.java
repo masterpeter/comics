@@ -14,6 +14,8 @@ public interface MasterContract {
         void start();
 
         void stop();
+
+        void getMoreComics();
     }
 
     interface View {
