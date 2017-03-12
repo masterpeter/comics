@@ -108,17 +108,17 @@ public class ComicMapper implements Mapper<ComicEntity, Comic> {
         return prices;
     }
 
-    private List<String> mapImages(List<ComicImageEntity> comicThumbnails) {
-        List<String> thumbnails = new ArrayList<>();
-        if (comicThumbnails != null) {
-            for (ComicImageEntity comicThumbnail : comicThumbnails) {
+    private List<String> mapImages(List<ComicImageEntity> comicImages) {
+        List<String> images = new ArrayList<>();
+        if (comicImages != null) {
+            for (ComicImageEntity comicThumbnail : comicImages) {
                 String image = mapImage(comicThumbnail);
                 if (!Utils.isEmpty(image)) {
-                    thumbnails.add(image);
+                    images.add(image);
                 }
             }
         }
-        return thumbnails;
+        return images;
     }
 
     private static String mapImage(ComicImageEntity image) {

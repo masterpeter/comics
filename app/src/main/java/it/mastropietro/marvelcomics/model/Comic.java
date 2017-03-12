@@ -22,7 +22,7 @@ public final class Comic implements Parcelable {
     private final String thumbnail;
     private final List<ComicDate> comicDates;
     private final List<ComicPrice> comicPrices;
-    private final List<String> thumbnails;
+    private final List<String> images;
     private final List<String> characters;
 
     public int getId() {
@@ -66,7 +66,7 @@ public final class Comic implements Parcelable {
     }
 
     public List<String> getImages() {
-        return thumbnails;
+        return images;
     }
 
     public List<String> getCharacters() {
@@ -84,7 +84,7 @@ public final class Comic implements Parcelable {
         this.seriesName = builder.seriesName;
         this.comicDates = builder.comicDates;
         this.comicPrices = builder.comicPrices;
-        this.thumbnails = builder.images;
+        this.images = builder.images;
         this.characters = builder.characterList;
     }
 
@@ -192,7 +192,7 @@ public final class Comic implements Parcelable {
             return false;
         if (comicPrices != null ? !comicPrices.equals(comic.comicPrices) : comic.comicPrices != null)
             return false;
-        if (thumbnails != null ? !thumbnails.equals(comic.thumbnails) : comic.thumbnails != null)
+        if (images != null ? !images.equals(comic.images) : comic.images != null)
             return false;
         return characters != null ? characters.equals(comic.characters) : comic.characters == null;
 
@@ -209,7 +209,7 @@ public final class Comic implements Parcelable {
         result = 31 * result + (thumbnail != null ? thumbnail.hashCode() : 0);
         result = 31 * result + (comicDates != null ? comicDates.hashCode() : 0);
         result = 31 * result + (comicPrices != null ? comicPrices.hashCode() : 0);
-        result = 31 * result + (thumbnails != null ? thumbnails.hashCode() : 0);
+        result = 31 * result + (images != null ? images.hashCode() : 0);
         result = 31 * result + (characters != null ? characters.hashCode() : 0);
         return result;
     }
@@ -230,7 +230,7 @@ public final class Comic implements Parcelable {
         dest.writeString(this.thumbnail);
         dest.writeList(this.comicDates);
         dest.writeList(this.comicPrices);
-        dest.writeStringList(this.thumbnails);
+        dest.writeStringList(this.images);
         dest.writeStringList(this.characters);
     }
 
@@ -247,7 +247,7 @@ public final class Comic implements Parcelable {
         in.readList(this.comicDates, ComicDate.class.getClassLoader());
         this.comicPrices = new ArrayList<>();
         in.readList(this.comicPrices, ComicPrice.class.getClassLoader());
-        this.thumbnails = in.createStringArrayList();
+        this.images = in.createStringArrayList();
         this.characters = in.createStringArrayList();
     }
 
