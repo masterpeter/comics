@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import java.util.List;
 
@@ -14,6 +13,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.mastropietro.marvelcomics.R;
 import it.mastropietro.marvelcomics.model.Comic;
+import it.mastropietro.marvelcomics.ui.detail.DetailActivity;
 import it.mastropietro.marvelcomics.ui.di.DaggerMasterComponent;
 import it.mastropietro.marvelcomics.ui.di.MasterModule;
 
@@ -58,7 +58,7 @@ public class MasterActivity
     }
 
     @Override public void onComicClick(Comic comic) {
-        Log.d(TAG, "Clicked comic with title: " + comic.getTitle());
+        startActivity(DetailActivity.getCallingIntent(this, comic));
     }
 
     @Override public void hideLoading() {
