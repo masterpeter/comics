@@ -8,6 +8,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.mastropietro.marvelcomics.R;
@@ -54,12 +56,15 @@ public class DetailView extends CoordinatorLayout {
 
     public void bindData(Comic comic) {
         setTitle(comic.getTitle());
-        setImages();
+        setImages(comic.getImages());
         setCardsInfo(comic);
     }
 
-    private void setImages() {
-        // TODO: 12/03/17 Add viewpager adapter ecc ecc...
+    private void setImages(List<String> images) {
+        ImageAdapter imageAdapter = new ImageAdapter(images);
+        viewPager.setAdapter(imageAdapter);
+        viewPager.setOffscreenPageLimit(3);
+        imageAdapter.notifyDataSetChanged();
     }
 
     private void setTitle(String comicTitle) {
