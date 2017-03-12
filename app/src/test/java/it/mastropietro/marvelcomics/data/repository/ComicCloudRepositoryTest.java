@@ -4,14 +4,13 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-import it.mastropietro.marvelcomics.ComicRepository;
+import it.mastropietro.marvelcomics.usecase.ComicRepository;
 import it.mastropietro.marvelcomics.data.TestUtils;
 import it.mastropietro.marvelcomics.data.entity.mapper.ComicMapper;
 import it.mastropietro.marvelcomics.model.Comic;

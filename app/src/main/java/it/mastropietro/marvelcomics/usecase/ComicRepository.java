@@ -1,4 +1,4 @@
-package it.mastropietro.marvelcomics;
+package it.mastropietro.marvelcomics.usecase;
 
 import java.util.List;
 
