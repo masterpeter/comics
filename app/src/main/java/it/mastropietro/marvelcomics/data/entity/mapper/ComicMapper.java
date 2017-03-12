@@ -8,12 +8,14 @@ import java.util.Locale;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import it.mastropietro.marvelcomics.Utils;
 import it.mastropietro.marvelcomics.data.entity.CharacterEntity;
 import it.mastropietro.marvelcomics.data.entity.CharacterSummaryEntity;
 import it.mastropietro.marvelcomics.data.entity.ComicEntity;
 import it.mastropietro.marvelcomics.data.entity.ComicEntityDate;
 import it.mastropietro.marvelcomics.data.entity.ComicEntityPrice;
 import it.mastropietro.marvelcomics.data.entity.ComicImageEntity;
+import it.mastropietro.marvelcomics.data.entity.ComicSeriesEntity;
 import it.mastropietro.marvelcomics.model.Comic;
 import it.mastropietro.marvelcomics.model.ComicDate;
 import it.mastropietro.marvelcomics.model.ComicPrice;
@@ -52,24 +54,29 @@ public class ComicMapper implements Mapper<ComicEntity, Comic> {
         return comicEntity.getPageCount() == 0 ? NOT_AVAILABLE : String.valueOf(comicEntity.getPageCount());
     }
 
-    private String mapTitle(ComicEntity comicEntity) {
-        return comicEntity.getTitle().isEmpty() ? NOT_AVAILABLE : comicEntity.getTitle();
+    private static String mapTitle(ComicEntity comicEntity) {
+        return Utils.isEmpty(comicEntity.getTitle()) ? NOT_AVAILABLE : comicEntity.getTitle();
     }
 
-    private String mapDescription(ComicEntity comicEntity) {
-        return comicEntity.getDescription().isEmpty() ? NOT_AVAILABLE : comicEntity.getDescription();
+    private static String mapDescription(ComicEntity comicEntity) {
+        return Utils.isEmpty(comicEntity.getDescription()) ? NOT_AVAILABLE : comicEntity.getDescription();
     }
 
-    private String mapISBN(ComicEntity comicEntity) {
-        return comicEntity.getIsbn().isEmpty() ? NOT_AVAILABLE : comicEntity.getIsbn();
+    private static String mapISBN(ComicEntity comicEntity) {
+        return Utils.isEmpty(comicEntity.getIsbn()) ? NOT_AVAILABLE : comicEntity.getIsbn();
     }
 
-    private String mapFormat(ComicEntity comicEntity) {
-        return comicEntity.getFormat().isEmpty() ? NOT_AVAILABLE : comicEntity.getFormat();
+    private static String mapFormat(ComicEntity comicEntity) {
+        return Utils.isEmpty(comicEntity.getFormat()) ? NOT_AVAILABLE : comicEntity.getFormat();
     }
 
-    private String mapSeriesName(ComicEntity comicEntity) {
-        return comicEntity.getSeriesName() == null ? NOT_AVAILABLE : comicEntity.getSeriesName().getName().isEmpty() ? NOT_AVAILABLE : comicEntity.getSeriesName().getName();
+    private static String mapSeriesName(ComicEntity comicEntity) {
+        ComicSeriesEntity comicSeries = comicEntity.getSeriesName();
+        if (comicSeries != null) {
+            String comicSeriesName = comicSeries.getName();
+            return Utils.isEmpty(comicSeriesName) ? NOT_AVAILABLE : comicSeriesName;
+        }
+        return NOT_AVAILABLE;
     }
 
     private List<ComicDate> mapDates(List<ComicEntityDate> comicDates) {
@@ -87,13 +94,13 @@ public class ComicMapper implements Mapper<ComicEntity, Comic> {
         return dates;
     }
 
-    private List<ComicPrice> mapPrices(List<ComicEntityPrice> comicPrices) {
+    private static List<ComicPrice> mapPrices(List<ComicEntityPrice> comicPrices) {
         List<ComicPrice> prices = new ArrayList<>();
         if (comicPrices != null) {
             for (ComicEntityPrice comicPrice : comicPrices) {
                 String type = comicPrice.getType();
                 String price = comicPrice.getPrice() == 0f ? NOT_AVAILABLE : String.valueOf(comicPrice.getPrice());
-                if (type != null) {
+                if (!Utils.isEmpty(type)) {
                     prices.add(new ComicPrice(type, price));
                 }
             }
@@ -106,7 +113,7 @@ public class ComicMapper implements Mapper<ComicEntity, Comic> {
         if (comicThumbnails != null) {
             for (ComicImageEntity comicThumbnail : comicThumbnails) {
                 String image = mapImage(comicThumbnail);
-                if (!image.isEmpty()) {
+                if (!Utils.isEmpty(image)) {
                     thumbnails.add(image);
                 }
             }
@@ -114,23 +121,23 @@ public class ComicMapper implements Mapper<ComicEntity, Comic> {
         return thumbnails;
     }
 
-    private String mapImage(ComicImageEntity image) {
+    private static String mapImage(ComicImageEntity image) {
         String path = image.getPath();
         String fileExt = image.getFileExt();
-        if (path != null && fileExt != null) {
+        if (!Utils.isEmpty(path) && !Utils.isEmpty(fileExt)) {
             return path + "." + fileExt;
         }
         return "";
     }
 
-    private List<String> mapCharactersSummaries(CharacterSummaryEntity summaries) {
+    private static List<String> mapCharactersSummaries(CharacterSummaryEntity summaries) {
         List<String> characterSummaries = new ArrayList<>();
         if (summaries != null) {
             List<CharacterEntity> characters = summaries.getCharacters();
             if (characters != null) {
                 for (CharacterEntity character : characters) {
                     String name = character.getName();
-                    if (name != null) {
+                    if (!Utils.isEmpty(name)) {
                         characterSummaries.add(name);
                     }
                 }
