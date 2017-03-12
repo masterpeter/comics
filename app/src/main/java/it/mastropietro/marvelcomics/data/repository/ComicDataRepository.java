@@ -23,7 +23,7 @@ public class ComicDataRepository implements ComicRepository {
         this.cloudRepo = cloudRepo;
     }
 
-    @Override public Single<List<Comic>> getComics(int characterId) {
-        return cloudRepo.getComics(characterId);
+    @Override public Single<List<Comic>> getComics(int characterId, int offset) {
+        return cloudRepo.getComics(characterId, offset);
     }
 }

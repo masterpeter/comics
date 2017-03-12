@@ -27,10 +27,14 @@ public class GetComicsFromCharacter extends UseCase {
     }
 
     @Override protected Single buildObservable() {
-        return comicRepository.getComics(characterId);
+        return comicRepository.getComics(characterId, getOffset());
     }
 
     public void setPageNumber(int pageNumber) {
         this.pageNumber = pageNumber;
+    }
+
+    private int getOffset() {
+        return pageNumber * COMIC_LIMIT;
     }
 }

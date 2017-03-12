@@ -9,10 +9,10 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import it.mastropietro.marvelcomics.usecase.ComicRepository;
 import it.mastropietro.marvelcomics.data.entity.ComicEntity;
 import it.mastropietro.marvelcomics.data.entity.mapper.ComicMapper;
 import it.mastropietro.marvelcomics.model.Comic;
+import it.mastropietro.marvelcomics.usecase.ComicRepository;
 import rx.Observable;
 import rx.Single;
 import rx.SingleSubscriber;
@@ -37,20 +37,21 @@ public class ComicCloudRepository implements ComicRepository {
         this.apiKeyProvider = apiKeyProvider;
     }
 
-    @Override public Single<List<Comic>> getComics(int characterId) {
-        return Single.create(comicEntityList(characterId))
+    @Override public Single<List<Comic>> getComics(int characterId, int offset) {
+        return Single.create(comicEntityList(characterId, offset))
                 .flatMapObservable(convertToSingleItems())
                 .map(comicEntityToComic())
                 .toList()
                 .toSingle();
     }
 
-    @NonNull private Single.OnSubscribe<List<ComicEntity>> comicEntityList(final int characterId) {
+    @NonNull
+    private Single.OnSubscribe<List<ComicEntity>> comicEntityList(final int characterId, final int offset) {
         return new Single.OnSubscribe<List<ComicEntity>>() {
             @Override
             public void call(SingleSubscriber<? super List<ComicEntity>> singleSubscriber) {
                 try {
-                    List<ComicEntity> comicEntitiesFromNetwork = getComicEntitiesFromNetwork(characterId);
+                    List<ComicEntity> comicEntitiesFromNetwork = getComicEntitiesFromNetwork(characterId, offset);
                     singleSubscriber.onSuccess(comicEntitiesFromNetwork);
                 } catch (IOException e) {
                     singleSubscriber.onError(e);
@@ -59,8 +60,8 @@ public class ComicCloudRepository implements ComicRepository {
         };
     }
 
-    private List<ComicEntity> getComicEntitiesFromNetwork(int characterId) throws IOException {
-        return comicService.getComicList(characterId, apiKeyProvider.getQueryMap())
+    private List<ComicEntity> getComicEntitiesFromNetwork(int characterId, int offset) throws IOException {
+        return comicService.getComicList(characterId, offset, apiKeyProvider.getQueryMap())
                 .execute()
                 .body()
                 .getData()
