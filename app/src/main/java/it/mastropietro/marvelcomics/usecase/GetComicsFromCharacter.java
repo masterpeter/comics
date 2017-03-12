@@ -1,6 +1,7 @@
 package it.mastropietro.marvelcomics.usecase;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import rx.Scheduler;
 import rx.Single;
@@ -16,9 +17,9 @@ public class GetComicsFromCharacter extends UseCase {
 
     @Inject
     public GetComicsFromCharacter(int characterId,
-                                  ComicRepository comicRepository,
-                                  Scheduler backgroundThread,
-                                  Scheduler mainThread) {
+                                  @Named("dataRepo") ComicRepository comicRepository,
+                                  @Named("backgroundThread") Scheduler backgroundThread,
+                                  @Named("mainThread") Scheduler mainThread) {
         super(backgroundThread, mainThread);
         this.characterId = characterId;
         this.comicRepository = comicRepository;

@@ -2,6 +2,7 @@ package it.mastropietro.marvelcomics.ui;
 
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import it.mastropietro.marvelcomics.model.Comic;
@@ -17,6 +18,7 @@ class MasterPresenter implements MasterContract.Presenter {
     private UseCase getComicsFromCharacterId;
     private MasterContract.View viewModel;
 
+    @Inject
     public MasterPresenter(@Named("getComics") UseCase getComicsFromCharacterId,
                            MasterContract.View viewModel) {
         this.getComicsFromCharacterId = getComicsFromCharacterId;
