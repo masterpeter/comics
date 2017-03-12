@@ -4,8 +4,11 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import it.mastropietro.marvelcomics.ComicRepository;
@@ -23,6 +26,7 @@ import rx.observers.TestSubscriber;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by Angelo Mastropietro on 10/03/17.
@@ -47,7 +51,9 @@ public class ComicCloudRepositoryTest {
     private static void setupComicCloudRepository() {
         HttpUrl baseUrl = mockWebServer.url("/");
         ComicService comicService = getRetrofit(baseUrl).create(ComicService.class);
-        cloudRepository = new ComicCloudRepository(FAKE_CHARACTER_ID, comicService, new ComicMapper());
+        ApiKeyProvider apiKeyProvider = Mockito.mock(ApiKeyProvider.class);
+        when(apiKeyProvider.getQueryMap()).thenReturn(new HashMap<String, String>());
+        cloudRepository = new ComicCloudRepository(comicService, new ComicMapper(), apiKeyProvider);
     }
 
     private static Retrofit getRetrofit(HttpUrl baseUrl) {
@@ -64,14 +70,14 @@ public class ComicCloudRepositoryTest {
 
     @Test
     public void whenGetCountryIsCalledFromCloud_returnAnObservableWithComics() throws Exception {
-        Single<List<Comic>> singleComicList = cloudRepository.getComics();
+        Single<List<Comic>> singleComicList = cloudRepository.getComics(FAKE_CHARACTER_ID);
 
         assertNotNull(singleComicList);
     }
 
     @Test
     public void whenGetCountryIsCalledFromCloud_returnSingleWithExactlyOneList() throws Exception {
-        Single<List<Comic>> singleComicList = cloudRepository.getComics();
+        Single<List<Comic>> singleComicList = cloudRepository.getComics(FAKE_CHARACTER_ID);
 
         TestSubscriber<List<Comic>> testSubscriber = new TestSubscriber<>();
         singleComicList.subscribe(testSubscriber);
@@ -82,7 +88,7 @@ public class ComicCloudRepositoryTest {
 
     @Test
     public void whenGetCountryIsCalledFromCloud_returnExpectedItems() throws Exception {
-        Single<List<Comic>> singleComicList = cloudRepository.getComics();
+        Single<List<Comic>> singleComicList = cloudRepository.getComics(FAKE_CHARACTER_ID);
 
         TestSubscriber<List<Comic>> testSubscriber = new TestSubscriber<>();
         singleComicList.subscribe(testSubscriber);

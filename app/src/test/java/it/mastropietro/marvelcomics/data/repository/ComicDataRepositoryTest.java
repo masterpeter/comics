@@ -26,6 +26,7 @@ import static org.mockito.Mockito.when;
  */
 public class ComicDataRepositoryTest {
 
+    private static final int FAKE_CHARACTER_ID = 12345;
     private ComicRepository comicRepository;
 
     @Mock ComicCloudRepository cloudRepository;
@@ -33,17 +34,17 @@ public class ComicDataRepositoryTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        when(cloudRepository.getComics()).thenReturn(getFakeComicsObservable());
+        when(cloudRepository.getComics(FAKE_CHARACTER_ID)).thenReturn(getFakeComicsObservable());
         comicRepository = new ComicDataRepository(cloudRepository);
     }
 
     @Test
     public void whenGetComicsIsCalled_returnAnObservableOfComics() throws Exception {
-        Single<List<Comic>> comics = comicRepository.getComics();
+        Single<List<Comic>> comics = comicRepository.getComics(FAKE_CHARACTER_ID);
         TestSubscriber<List<Comic>> testSubscriber = new TestSubscriber<>();
         comics.subscribe(testSubscriber);
 
-        verify(cloudRepository).getComics();
+        verify(cloudRepository).getComics(FAKE_CHARACTER_ID);
         assertNotNull(comics);
         testSubscriber.assertNoErrors();
 

@@ -11,5 +11,5 @@ import rx.Single;
 
 public interface ComicRepository {
 
-    Single<List<Comic>> getComics();
+    Single<List<Comic>> getComics(int byCharacterId);
 }

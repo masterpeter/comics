@@ -22,33 +22,33 @@ import rx.functions.Func1;
 
 class ComicCloudRepository implements ComicRepository {
 
-    private final int characterId;
     private final ComicService comicService;
     private final ComicMapper comicMapper;
+    private final ApiKeyProvider apiKeyProvider;
 
     @Inject
-    public ComicCloudRepository(int characterId,
-                                ComicService comicService,
-                                ComicMapper comicMapper) {
-        this.characterId = characterId;
+    public ComicCloudRepository(ComicService comicService,
+                                ComicMapper comicMapper,
+                                ApiKeyProvider apiKeyProvider) {
         this.comicService = comicService;
         this.comicMapper = comicMapper;
+        this.apiKeyProvider = apiKeyProvider;
     }
 
-    @Override public Single<List<Comic>> getComics() {
-        return Single.create(comicEntityList())
+    @Override public Single<List<Comic>> getComics(int characterId) {
+        return Single.create(comicEntityList(characterId))
                 .flatMapObservable(convertToSingleItems())
                 .map(comicEntityToComic())
                 .toList()
                 .toSingle();
     }
 
-    @NonNull private Single.OnSubscribe<List<ComicEntity>> comicEntityList() {
+    @NonNull private Single.OnSubscribe<List<ComicEntity>> comicEntityList(final int characterId) {
         return new Single.OnSubscribe<List<ComicEntity>>() {
             @Override
             public void call(SingleSubscriber<? super List<ComicEntity>> singleSubscriber) {
                 try {
-                    List<ComicEntity> comicEntitiesFromNetwork = getComicEntitiesFromNetwork();
+                    List<ComicEntity> comicEntitiesFromNetwork = getComicEntitiesFromNetwork(characterId);
                     singleSubscriber.onSuccess(comicEntitiesFromNetwork);
                 } catch (IOException e) {
                     singleSubscriber.onError(e);
@@ -57,8 +57,8 @@ class ComicCloudRepository implements ComicRepository {
         };
     }
 
-    private List<ComicEntity> getComicEntitiesFromNetwork() throws IOException {
-        return comicService.getComicList(characterId)
+    private List<ComicEntity> getComicEntitiesFromNetwork(int characterId) throws IOException {
+        return comicService.getComicList(characterId, apiKeyProvider.getQueryMap())
                 .execute()
                 .body()
                 .getData()
