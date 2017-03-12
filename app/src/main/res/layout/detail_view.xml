@@ -20,6 +20,7 @@
                 android:id="@+id/detail_comic_images"
                 android:layout_width="match_parent"
                 android:layout_height="240dp"
+                android:background="@color/cardview_dark_background"
                 app:layout_collapseMode="parallax"/>
 
             <android.support.v7.widget.Toolbar
@@ -31,9 +32,38 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
-        android:id="@+id/detail_comic_info_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/darker_gray"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        android:clipToPadding="false"
+        android:paddingLeft="@dimen/base_margin"
+        android:paddingRight="@dimen/base_margin"
+        android:paddingTop="@dimen/base_margin"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <it.mastropietro.marvelcomics.ui.detail.DetailGeneralInfoView
+                android:id="@+id/detail_general_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/base_margin"/>
+
+            <it.mastropietro.marvelcomics.ui.detail.DetailCharactersView
+                android:id="@+id/detail_characters"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/base_margin"/>
+
+            <it.mastropietro.marvelcomics.ui.detail.DetailDatesPricesView
+                android:id="@+id/detail_dates_prices"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/base_margin"/>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 </merge>

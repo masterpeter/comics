@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">MarvelComics</string>
+    <string name="general_info">General Info</string>
+    <string name="description">Description:</string>
+    <string name="isbn">ISBN:</string>
+    <string name="format">Format:</string>
+    <string name="series_name">Series Name:</string>
+    <string name="page_count">Pages:</string>
+    <string name="characters">Characters</string>
+    <string name="dates_and_prices"><![CDATA[Dates & Prices]]></string>
+    <string name="dates">Dates:</string>
+    <string name="prices">Prices:</string>
 </resources>
