@@ -1,10 +1,13 @@
 package it.mastropietro.marvelcomics.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Angelo Mastropietro on 10/03/17.
  */
 
-public final class ComicDate {
+public final class ComicDate implements Parcelable {
 
     private final String type;
     private final String date;
@@ -38,4 +41,28 @@ public final class ComicDate {
         result = 31 * result + (date != null ? date.hashCode() : 0);
         return result;
     }
+
+    @Override public int describeContents() {
+        return 0;
+    }
+
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.type);
+        dest.writeString(this.date);
+    }
+
+    protected ComicDate(Parcel in) {
+        this.type = in.readString();
+        this.date = in.readString();
+    }
+
+    public static final Creator<ComicDate> CREATOR = new Creator<ComicDate>() {
+        @Override public ComicDate createFromParcel(Parcel source) {
+            return new ComicDate(source);
+        }
+
+        @Override public ComicDate[] newArray(int size) {
+            return new ComicDate[size];
+        }
+    };
 }

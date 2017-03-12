@@ -1,12 +1,16 @@
 package it.mastropietro.marvelcomics.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Angelo Mastropietro on 10/03/17.
  */
 
-public final class Comic {
+public final class Comic implements Parcelable {
 
     private final int id;
     private final String title;
@@ -209,4 +213,51 @@ public final class Comic {
         result = 31 * result + (characters != null ? characters.hashCode() : 0);
         return result;
     }
+
+
+    @Override public int describeContents() {
+        return 0;
+    }
+
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.title);
+        dest.writeString(this.description);
+        dest.writeString(this.isbn);
+        dest.writeString(this.format);
+        dest.writeString(this.pageCount);
+        dest.writeString(this.seriesName);
+        dest.writeString(this.thumbnail);
+        dest.writeList(this.comicDates);
+        dest.writeList(this.comicPrices);
+        dest.writeStringList(this.thumbnails);
+        dest.writeStringList(this.characters);
+    }
+
+    protected Comic(Parcel in) {
+        this.id = in.readInt();
+        this.title = in.readString();
+        this.description = in.readString();
+        this.isbn = in.readString();
+        this.format = in.readString();
+        this.pageCount = in.readString();
+        this.seriesName = in.readString();
+        this.thumbnail = in.readString();
+        this.comicDates = new ArrayList<>();
+        in.readList(this.comicDates, ComicDate.class.getClassLoader());
+        this.comicPrices = new ArrayList<>();
+        in.readList(this.comicPrices, ComicPrice.class.getClassLoader());
+        this.thumbnails = in.createStringArrayList();
+        this.characters = in.createStringArrayList();
+    }
+
+    public static final Creator<Comic> CREATOR = new Creator<Comic>() {
+        @Override public Comic createFromParcel(Parcel source) {
+            return new Comic(source);
+        }
+
+        @Override public Comic[] newArray(int size) {
+            return new Comic[size];
+        }
+    };
 }
