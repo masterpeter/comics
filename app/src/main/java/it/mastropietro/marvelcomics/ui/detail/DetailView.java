@@ -1,15 +1,12 @@
 package it.mastropietro.marvelcomics.ui.detail;
 
 import android.content.Context;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 
-import java.util.List;
-
+import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.mastropietro.marvelcomics.R;
@@ -19,13 +16,12 @@ import it.mastropietro.marvelcomics.model.Comic;
  * Created by Angelo Mastropietro on 12/03/17.
  */
 
-public class DetailView extends CoordinatorLayout {
+public class DetailView extends NestedScrollView {
 
-    @BindView(R.id.detail_comic_title) Toolbar toolbar;
-    @BindView(R.id.detail_comic_images) ViewPager viewPager;
     @BindView(R.id.detail_general_info) DetailGeneralInfoView detailGeneralInfoView;
     @BindView(R.id.detail_characters) DetailCharactersView detailCharacters;
     @BindView(R.id.detail_dates_prices) DetailDatesPricesView detailDatesPrices;
+    @BindDimen(R.dimen.base_spacing) int baseSpacing;
 
     public DetailView(Context context) {
         this(context, null);
@@ -37,12 +33,14 @@ public class DetailView extends CoordinatorLayout {
 
     public DetailView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        initInjects();
         init();
     }
 
     private void init() {
-        initInjects();
-        initViews();
+        setBackgroundColor(ContextCompat.getColor(getContext(), R.color.light_grey));
+        setClipToPadding(false);
+        setPadding(baseSpacing, baseSpacing, baseSpacing, 0);
     }
 
     private void initInjects() {
@@ -50,25 +48,8 @@ public class DetailView extends CoordinatorLayout {
         ButterKnife.bind(this);
     }
 
-    private void initViews() {
-        ((AppCompatActivity) getContext()).setSupportActionBar(toolbar);
-    }
-
     public void bindData(Comic comic) {
-        setTitle(comic.getTitle());
-        setImages(comic.getImages());
         setCardsInfo(comic);
-    }
-
-    private void setImages(List<String> images) {
-        ImageAdapter imageAdapter = new ImageAdapter(images);
-        viewPager.setAdapter(imageAdapter);
-        viewPager.setOffscreenPageLimit(3);
-        imageAdapter.notifyDataSetChanged();
-    }
-
-    private void setTitle(String comicTitle) {
-        ((AppCompatActivity) getContext()).getSupportActionBar().setTitle(comicTitle);
     }
 
     private void setCardsInfo(Comic comic) {

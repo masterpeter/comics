@@ -15,6 +15,8 @@ import java.util.List;
 
 public class ImageAdapter extends PagerAdapter {
 
+    public static final int OFFSCREEN_PAGE_LIMIT = 3;
+
     private List<String> images;
 
     public ImageAdapter(List<String> images) {
