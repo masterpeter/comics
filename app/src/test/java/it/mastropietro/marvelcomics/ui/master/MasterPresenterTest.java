@@ -16,7 +16,9 @@ import it.mastropietro.marvelcomics.usecase.UseCaseFactory;
 import rx.Single;
 import rx.schedulers.Schedulers;
 
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -26,18 +28,18 @@ import static org.mockito.Mockito.when;
  */
 public class MasterPresenterTest {
 
+    @Mock UseCaseFactory<Integer> useCaseFactory;
     @Mock MasterContract.View viewModel;
-    @Mock UseCaseFactory<Integer> factory;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        when(factory.createUseCase(anyInt())).thenReturn(buildUseCase());
+        when(useCaseFactory.createUseCase(anyInt())).thenReturn(buildUseCase());
     }
 
     @SuppressWarnings("unchecked") @Test
     public void whenPresenterStarts_executeUseCaseToRetrieveComics() throws Exception {
-        MasterPresenter presenter = new MasterPresenter(factory);
+        MasterPresenter presenter = new MasterPresenter(useCaseFactory);
         presenter.setViewModel(viewModel);
 
         presenter.start();
@@ -49,7 +51,7 @@ public class MasterPresenterTest {
     @Test
     public void whenPresenterStops_unsubscribeFromUseCase() throws Exception {
         UseCase mockUseCase = Mockito.mock(UseCase.class);
-        MasterPresenter presenter = new MasterPresenter(factory);
+        MasterPresenter presenter = new MasterPresenter(useCaseFactory);
         presenter.setViewModel(viewModel);
         presenter.getComicsFromCharacterId = mockUseCase;
 
@@ -59,11 +61,23 @@ public class MasterPresenterTest {
         assertNull(presenter.viewModel);
     }
 
+    @Test
+    public void whenComicsAreEmpty_shouldntAllowLoadMoreComics() throws Exception {
+        MasterPresenter presenter = new MasterPresenter(useCaseFactory);
+        presenter.setViewModel(viewModel);
+
+        assertTrue(presenter.canLoadMore);
+
+        presenter.getMoreComics();
+
+        verify(viewModel).showLoading();
+        assertFalse(presenter.canLoadMore);
+    }
+
     private UseCase buildUseCase() {
         return new UseCase(Schedulers.io(), Schedulers.immediate()) {
             @Override protected Single buildObservable() {
                 List<Comic> comicList = new ArrayList<>();
-                comicList.add(new Comic.Builder().build());
                 return Single.just(comicList);
             }
         };

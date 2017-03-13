@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import it.mastropietro.marvelcomics.Constants;
 import it.mastropietro.marvelcomics.model.Comic;
 import it.mastropietro.marvelcomics.usecase.UseCase;
 import it.mastropietro.marvelcomics.usecase.UseCaseFactory;
@@ -16,15 +17,16 @@ import rx.Subscriber;
 
 class MasterPresenter implements MasterContract.Presenter {
 
-    private UseCaseFactory<Integer> getComicsUseCaseFactory;
-    private int pageNumber;
-
-    MasterContract.View viewModel;
+    int pageNumber;
+    boolean canLoadMore;
+    UseCaseFactory<Integer> getComicsUseCaseFactory;
     UseCase getComicsFromCharacterId;
+    MasterContract.View viewModel;
 
     @Inject
     public MasterPresenter(@Named("comicsUseCaseFactory") UseCaseFactory<Integer> getComicsUseCaseFactory) {
         this.getComicsUseCaseFactory = getComicsUseCaseFactory;
+        this.canLoadMore = true;
     }
 
     @Override
@@ -36,7 +38,7 @@ class MasterPresenter implements MasterContract.Presenter {
         if (getComicsFromCharacterId != null) {
             getComicsFromCharacterId.unsubscribe();
         }
-        getComicsFromCharacterId = getComicsUseCaseFactory.createUseCase(pageNumber + 1);
+        getComicsFromCharacterId = getComicsUseCaseFactory.createUseCase(pageNumber);
         getComicsFromCharacterId.execute(new ComicListSubscriber());
     }
 
@@ -49,8 +51,10 @@ class MasterPresenter implements MasterContract.Presenter {
     }
 
     @Override public void getMoreComics() {
-        viewModel.showLoading();
-        executeGetComicsUseCase();
+        if (canLoadMore) {
+            viewModel.showLoading();
+            executeGetComicsUseCase();
+        }
     }
 
     @Override
@@ -70,6 +74,11 @@ class MasterPresenter implements MasterContract.Presenter {
 
         @Override public void onNext(List<Comic> comics) {
             viewModel.showComicList(comics);
+            canLoadMoreComics(comics);
         }
+    }
+
+    private void canLoadMoreComics(List<Comic> comics) {
+        canLoadMore = !comics.isEmpty() && comics.size() == Constants.COMIC_LIMIT;
     }
 }

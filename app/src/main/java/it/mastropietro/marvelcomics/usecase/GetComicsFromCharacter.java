@@ -2,6 +2,7 @@ package it.mastropietro.marvelcomics.usecase;
 
 import javax.inject.Named;
 
+import it.mastropietro.marvelcomics.Constants;
 import rx.Scheduler;
 import rx.Single;
 
@@ -10,8 +11,6 @@ import rx.Single;
  */
 
 public class GetComicsFromCharacter extends UseCase {
-
-    private static final int COMIC_LIMIT = 20;
 
     private int pageNumber;
     private final int characterId;
@@ -35,6 +34,6 @@ public class GetComicsFromCharacter extends UseCase {
     }
 
     private int getOffset() {
-        return pageNumber * COMIC_LIMIT;
+        return pageNumber * Constants.COMIC_LIMIT;
     }
 }
