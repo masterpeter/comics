@@ -10,6 +10,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import it.mastropietro.marvelcomics.data.repository.clock.Clock;
+
 /**
  * Created by Angelo Mastropietro on 11/03/17.
  */

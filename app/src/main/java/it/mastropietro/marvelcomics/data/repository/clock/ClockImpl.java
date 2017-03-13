@@ -1,4 +1,4 @@
-package it.mastropietro.marvelcomics.data.repository;
+package it.mastropietro.marvelcomics.data.repository.clock;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
