@@ -39,8 +39,6 @@ public class DetailView extends NestedScrollView {
 
     private void init() {
         setBackgroundColor(ContextCompat.getColor(getContext(), R.color.light_grey));
-        setClipToPadding(false);
-        setPadding(baseSpacing, baseSpacing, baseSpacing, 0);
     }
 
     private void initInjects() {

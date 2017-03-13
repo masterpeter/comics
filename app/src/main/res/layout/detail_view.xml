@@ -7,7 +7,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/base_spacing"
+        android:paddingRight="@dimen/base_spacing"
+        android:paddingTop="@dimen/base_spacing">
 
         <it.mastropietro.marvelcomics.ui.detail.DetailGeneralInfoView
             android:id="@+id/detail_general_info"
