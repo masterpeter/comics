@@ -8,6 +8,8 @@ import org.mockito.MockitoAnnotations;
 import java.util.HashMap;
 import java.util.Map;
 
+import it.mastropietro.marvelcomics.data.repository.clock.Clock;
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 

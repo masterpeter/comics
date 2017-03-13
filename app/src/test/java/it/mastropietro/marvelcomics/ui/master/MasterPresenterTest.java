@@ -11,13 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.mastropietro.marvelcomics.model.Comic;
-import it.mastropietro.marvelcomics.ui.master.MasterContract;
-import it.mastropietro.marvelcomics.ui.master.MasterPresenter;
 import it.mastropietro.marvelcomics.usecase.UseCase;
 import it.mastropietro.marvelcomics.usecase.UseCaseFactory;
 import rx.Single;
 import rx.schedulers.Schedulers;
 
+import static junit.framework.Assert.assertNull;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -38,7 +37,8 @@ public class MasterPresenterTest {
 
     @SuppressWarnings("unchecked") @Test
     public void whenPresenterStarts_executeUseCaseToRetrieveComics() throws Exception {
-        MasterPresenter presenter = new MasterPresenter(factory, viewModel);
+        MasterPresenter presenter = new MasterPresenter(factory);
+        presenter.setViewModel(viewModel);
 
         presenter.start();
 
@@ -49,12 +49,14 @@ public class MasterPresenterTest {
     @Test
     public void whenPresenterStops_unsubscribeFromUseCase() throws Exception {
         UseCase mockUseCase = Mockito.mock(UseCase.class);
-        MasterPresenter presenter = new MasterPresenter(factory, viewModel);
+        MasterPresenter presenter = new MasterPresenter(factory);
+        presenter.setViewModel(viewModel);
         presenter.getComicsFromCharacterId = mockUseCase;
 
         presenter.stop();
 
         verify(mockUseCase).unsubscribe();
+        assertNull(presenter.viewModel);
     }
 
     private UseCase buildUseCase() {
