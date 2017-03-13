@@ -1,7 +1,5 @@
 package it.mastropietro.marvelcomics.ui.master;
 
-import android.util.Log;
-
 import java.util.List;
 
 import javax.inject.Inject;
@@ -21,6 +19,7 @@ class MasterPresenter implements MasterContract.Presenter {
     private UseCaseFactory<Integer> getComicsUseCaseFactory;
     private MasterContract.View viewModel;
     private int pageNumber;
+
     UseCase getComicsFromCharacterId;
 
     @Inject
@@ -36,7 +35,10 @@ class MasterPresenter implements MasterContract.Presenter {
     }
 
     private void executeGetComicsUseCase() {
-        getComicsFromCharacterId = getComicsUseCaseFactory.createUseCase(pageNumber);
+        if (getComicsFromCharacterId != null) {
+            getComicsFromCharacterId.unsubscribe();
+        }
+        getComicsFromCharacterId = getComicsUseCaseFactory.createUseCase(pageNumber + 1);
         getComicsFromCharacterId.execute(new ComicListSubscriber());
     }
 
@@ -48,17 +50,17 @@ class MasterPresenter implements MasterContract.Presenter {
     }
 
     @Override public void getMoreComics() {
-        pageNumber++;
+        viewModel.showLoading();
         executeGetComicsUseCase();
     }
 
     private final class ComicListSubscriber extends Subscriber<List<Comic>> {
         @Override public void onCompleted() {
+            pageNumber++;
             viewModel.hideLoading();
         }
 
         @Override public void onError(Throwable e) {
-            Log.e("TAG", "onError: ", e);
             viewModel.showError();
         }
 
