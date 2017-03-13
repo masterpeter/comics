@@ -5,6 +5,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class MasterActivity
         implements MasterContract.View, ComicListAdapter.OnComicClickListener, ComicListAdapter.OnLastItemReachedListener {
 
     @BindView(R.id.master_comic_list) RecyclerView comicList;
+    @BindView(R.id.master_toolbar) Toolbar masterToolbar;
     @Inject MasterPresenter presenter;
     @Inject ComicListAdapter listAdapter;
 
@@ -33,6 +35,8 @@ public class MasterActivity
         setContentView(R.layout.activity_master);
         ButterKnife.bind(this);
         init();
+        setSupportActionBar(masterToolbar);
+        getSupportActionBar().setTitle(R.string.app_name);
     }
 
     @Override protected void onStart() {
