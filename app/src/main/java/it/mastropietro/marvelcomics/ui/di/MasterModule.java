@@ -4,7 +4,6 @@ import javax.inject.Named;
 
 import dagger.Module;
 import dagger.Provides;
-import it.mastropietro.marvelcomics.ui.master.MasterContract;
 import it.mastropietro.marvelcomics.usecase.ComicsUseCaseFactory;
 import it.mastropietro.marvelcomics.usecase.UseCaseFactory;
 import rx.Scheduler;
@@ -17,20 +16,9 @@ import rx.schedulers.Schedulers;
 @Module
 public class MasterModule {
 
-    // TODO: 12/03/17 This could be leaked if the module doesn't die!
-    private MasterContract.View viewModel;
-
-    public MasterModule(MasterContract.View viewModel) {
-        this.viewModel = viewModel;
-    }
-
     @Provides @Named("comicsUseCaseFactory")
     UseCaseFactory<Integer> provideGetComicsUseCase(ComicsUseCaseFactory useCaseFactory) {
         return useCaseFactory;
-    }
-
-    @Provides MasterContract.View provideViewModel() {
-        return viewModel;
     }
 
     @Provides
