@@ -1,7 +1,9 @@
 package it.mastropietro.marvelcomics.data.entity.mapper;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -80,18 +82,38 @@ public class ComicMapper implements Mapper<ComicEntity, Comic> {
     }
 
     private List<ComicDate> mapDates(List<ComicEntityDate> comicDates) {
+        SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("d MMM yyyy", Locale.getDefault());
         List<ComicDate> dates = new ArrayList<>();
         if (comicDates != null) {
             for (ComicEntityDate comicEntityDate : comicDates) {
-                String type = comicEntityDate.getType();
-                String date = simpleDateFormat.format(comicEntityDate.getDate());
-                if (type != null && date != null) {
-                    dates.add(new ComicDate(type, date));
+                if (isAGoodDate(comicEntityDate)) {
+                    String date = comicEntityDate.getDate().substring(0, 10);
+                    String finalDate = buildGoodDate(originalFormat, simpleDateFormat, date);
+                    String type = comicEntityDate.getType();
+                    if (!Utils.isEmpty(type) && !Utils.isEmpty(date)) {
+                        dates.add(new ComicDate(type, finalDate));
+                    }
                 }
             }
         }
         return dates;
+    }
+
+    private String buildGoodDate(SimpleDateFormat originalFormat,
+                                 SimpleDateFormat simpleDateFormat,
+                                 String date) {
+        try {
+            Date dateTest = originalFormat.parse(date);
+            return simpleDateFormat.format(dateTest);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    private boolean isAGoodDate(ComicEntityDate comicEntityDate) {
+        return !comicEntityDate.getDate().startsWith("-000");
     }
 
     private static List<ComicPrice> mapPrices(List<ComicEntityPrice> comicPrices) {
