@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.List;
@@ -15,10 +16,12 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.mastropietro.marvelcomics.R;
+import it.mastropietro.marvelcomics.data.di.RepositoryModule;
 import it.mastropietro.marvelcomics.model.Comic;
 import it.mastropietro.marvelcomics.ui.detail.DetailActivity;
 import it.mastropietro.marvelcomics.ui.di.DaggerMasterComponent;
-import it.mastropietro.marvelcomics.ui.di.MasterModule;
+
+import static android.view.View.GONE;
 
 public class MasterActivity
         extends AppCompatActivity
@@ -26,6 +29,7 @@ public class MasterActivity
 
     @BindView(R.id.master_comic_list) RecyclerView comicList;
     @BindView(R.id.master_toolbar) Toolbar masterToolbar;
+    @BindView(R.id.progress_bar) ProgressBar progressBar;
     @Inject MasterPresenter presenter;
     @Inject ComicListAdapter listAdapter;
 
@@ -41,6 +45,7 @@ public class MasterActivity
 
     @Override protected void onStart() {
         super.onStart();
+        presenter.setViewModel(this);
         presenter.start();
     }
 
@@ -50,7 +55,10 @@ public class MasterActivity
     }
 
     private void initInject() {
-        DaggerMasterComponent.builder().masterModule(new MasterModule(this)).build().inject(this);
+        DaggerMasterComponent.builder()
+                .repositoryModule(new RepositoryModule(getApplicationContext()))
+                .build()
+                .inject(this);
     }
 
     private void initRecyclerView() {
@@ -79,6 +87,10 @@ public class MasterActivity
                 .setMessage(R.string.generic_error_message)
                 .setPositiveButton(android.R.string.ok, null)
                 .show();
+    }
+
+    @Override public void hideLoading() {
+        progressBar.setVisibility(GONE);
     }
 
     @Override public void onLastItemReached() {

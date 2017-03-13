@@ -11,6 +11,8 @@ import it.mastropietro.marvelcomics.model.Comic;
 public interface MasterContract {
 
     interface Presenter {
+        void setViewModel(View viewModel);
+
         void start();
 
         void stop();
@@ -24,5 +26,7 @@ public interface MasterContract {
         void showComicList(List<Comic> comicList);
 
         void showError();
+
+        void hideLoading();
     }
 }

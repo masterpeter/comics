@@ -17,16 +17,14 @@ import rx.Subscriber;
 class MasterPresenter implements MasterContract.Presenter {
 
     private UseCaseFactory<Integer> getComicsUseCaseFactory;
-    private MasterContract.View viewModel;
     private int pageNumber;
 
+    MasterContract.View viewModel;
     UseCase getComicsFromCharacterId;
 
     @Inject
-    public MasterPresenter(@Named("comicsUseCaseFactory") UseCaseFactory<Integer> getComicsUseCaseFactory,
-                           MasterContract.View viewModel) {
+    public MasterPresenter(@Named("comicsUseCaseFactory") UseCaseFactory<Integer> getComicsUseCaseFactory) {
         this.getComicsUseCaseFactory = getComicsUseCaseFactory;
-        this.viewModel = viewModel;
     }
 
     @Override
@@ -47,6 +45,7 @@ class MasterPresenter implements MasterContract.Presenter {
         if (getComicsFromCharacterId != null) {
             getComicsFromCharacterId.unsubscribe();
         }
+        viewModel = null;
     }
 
     @Override public void getMoreComics() {
@@ -54,9 +53,15 @@ class MasterPresenter implements MasterContract.Presenter {
         executeGetComicsUseCase();
     }
 
+    @Override
+    public void setViewModel(MasterContract.View viewModel) {
+        this.viewModel = viewModel;
+    }
+
     private final class ComicListSubscriber extends Subscriber<List<Comic>> {
         @Override public void onCompleted() {
             pageNumber++;
+            viewModel.hideLoading();
         }
 
         @Override public void onError(Throwable e) {
