@@ -19,7 +19,7 @@ public interface MasterContract {
     }
 
     interface View {
-        void hideLoading();
+        void showLoading();
 
         void showComicList(List<Comic> comicList);
 

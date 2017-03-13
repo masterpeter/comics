@@ -10,4 +10,7 @@
     <string name="dates_and_prices"><![CDATA[Dates & Prices]]></string>
     <string name="dates">Dates:</string>
     <string name="prices">Prices:</string>
+    <string name="generic_error_title">Ops!</string>
+    <string name="generic_error_message">This is awkward... may you try later? Thanks :)</string>
+    <string name="loading_data">Loading data!</string>
 </resources>

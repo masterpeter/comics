@@ -57,7 +57,6 @@ class MasterPresenter implements MasterContract.Presenter {
     private final class ComicListSubscriber extends Subscriber<List<Comic>> {
         @Override public void onCompleted() {
             pageNumber++;
-            viewModel.hideLoading();
         }
 
         @Override public void onError(Throwable e) {

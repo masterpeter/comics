@@ -1,9 +1,11 @@
 package it.mastropietro.marvelcomics.ui.master;
 
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -20,8 +22,6 @@ import it.mastropietro.marvelcomics.ui.di.MasterModule;
 public class MasterActivity
         extends AppCompatActivity
         implements MasterContract.View, ComicListAdapter.OnComicClickListener, ComicListAdapter.OnLastItemReachedListener {
-
-    private static final String TAG = MasterActivity.class.getName();
 
     @BindView(R.id.master_comic_list) RecyclerView comicList;
     @Inject MasterPresenter presenter;
@@ -61,8 +61,8 @@ public class MasterActivity
         startActivity(DetailActivity.getCallingIntent(this, comic));
     }
 
-    @Override public void hideLoading() {
-
+    @Override public void showLoading() {
+        Toast.makeText(this, R.string.loading_data, Toast.LENGTH_SHORT).show();
     }
 
     @Override public void showComicList(List<Comic> comicList) {
@@ -70,7 +70,11 @@ public class MasterActivity
     }
 
     @Override public void showError() {
-
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.generic_error_title)
+                .setMessage(R.string.generic_error_message)
+                .setPositiveButton(android.R.string.ok, null)
+                .show();
     }
 
     @Override public void onLastItemReached() {
