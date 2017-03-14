@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/master_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        android:title="@string/app_name"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/master_comic_list"
+        android:layout_width="320dp"
+        android:layout_height="match_parent"
+        android:layout_below="@id/master_toolbar"
+        android:clipToPadding="false"
+        android:padding="@dimen/base_spacing"/>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/master_toolbar"
+        android:layout_toEndOf="@+id/master_comic_list"
+        android:layout_toRightOf="@id/master_comic_list">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <it.mastropietro.marvelcomics.ui.ComicGalleryPager
+                android:id="@+id/detail_view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                android:layout_gravity="center"/>
+
+            <it.mastropietro.marvelcomics.ui.detail.DetailView
+                android:id="@+id/detail_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
+
+</RelativeLayout>
