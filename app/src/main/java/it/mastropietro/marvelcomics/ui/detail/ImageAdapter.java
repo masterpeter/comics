@@ -15,13 +15,7 @@ import java.util.List;
 
 public class ImageAdapter extends PagerAdapter {
 
-    public static final int OFFSCREEN_PAGE_LIMIT = 3;
-
     private List<String> images;
-
-    public ImageAdapter(List<String> images) {
-        this.images = images;
-    }
 
     @Override public Object instantiateItem(ViewGroup container, int position) {
         ImageView imageView = new ImageView(container.getContext());
@@ -32,7 +26,11 @@ public class ImageAdapter extends PagerAdapter {
     }
 
     @Override public int getCount() {
-        return images.size();
+        return images == null ? 0 : images.size();
+    }
+
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
     }
 
     @Override public boolean isViewFromObject(View view, Object object) {
@@ -41,5 +39,9 @@ public class ImageAdapter extends PagerAdapter {
 
     @Override public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView((View) object);
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 }
