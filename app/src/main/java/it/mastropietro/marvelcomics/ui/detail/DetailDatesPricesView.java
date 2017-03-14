@@ -50,6 +50,7 @@ public class DetailDatesPricesView extends CardView {
     }
 
     private void setDates(List<ComicDate> comicDates) {
+        datesContainer.removeAllViews();
         for (ComicDate comicDate : comicDates) {
             String date = comicDate.getType() + ": " + comicDate.getDate();
             datesContainer.addView(buildTextView(date));
@@ -57,6 +58,7 @@ public class DetailDatesPricesView extends CardView {
     }
 
     private void setPrices(List<ComicPrice> comicPrices) {
+        pricesContainer.removeAllViews();
         for (ComicPrice comicPrice : comicPrices) {
             String price = comicPrice.getType() + ": " + comicPrice.getPrice();
             pricesContainer.addView(buildTextView(price));

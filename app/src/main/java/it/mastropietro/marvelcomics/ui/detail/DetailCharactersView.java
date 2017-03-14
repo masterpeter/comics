@@ -41,11 +41,12 @@ public class DetailCharactersView extends CardView {
     }
 
     public void bindData(Comic comic) {
+        charactersContainer.removeAllViews();
         List<String> characters = comic.getCharacters();
-        for (int i = 0; i < characters.size(); i++) {
+        for (String character : characters) {
             TextView textView = new TextView(getContext());
-            textView.setText(characters.get(i));
-            charactersContainer.addView(textView, i + 1);
+            textView.setText(character);
+            charactersContainer.addView(textView);
         }
     }
 }

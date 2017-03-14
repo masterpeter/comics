@@ -5,7 +5,6 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:id="@+id/characters_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
@@ -17,6 +16,12 @@
             android:text="@string/characters"
             android:textColor="@android:color/black"
             android:textSize="32sp"/>
+
+        <LinearLayout
+            android:id="@+id/characters_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
 
     </LinearLayout>
 
