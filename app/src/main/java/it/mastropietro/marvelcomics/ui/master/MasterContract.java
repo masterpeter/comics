@@ -18,6 +18,8 @@ public interface MasterContract {
         void stop();
 
         void getMoreComics();
+
+        void onComicClick(Comic comic);
     }
 
     interface View {
@@ -28,5 +30,11 @@ public interface MasterContract {
         void showError();
 
         void hideLoading();
+
+        void navigateToDetailActivity(Comic comic);
+
+        void updateDetailView(Comic comic);
+
+        boolean isTablet();
     }
 }

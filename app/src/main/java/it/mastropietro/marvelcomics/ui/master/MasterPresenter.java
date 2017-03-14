@@ -57,6 +57,14 @@ class MasterPresenter implements MasterContract.Presenter {
         }
     }
 
+    @Override public void onComicClick(Comic comic) {
+        if (viewModel.isTablet()) {
+            viewModel.updateDetailView(comic);
+        } else {
+            viewModel.navigateToDetailActivity(comic);
+        }
+    }
+
     @Override
     public void setViewModel(MasterContract.View viewModel) {
         this.viewModel = viewModel;
