@@ -22,10 +22,21 @@
         android:clipToPadding="false"
         android:padding="@dimen/base_spacing"/>
 
-    <ProgressBar
+    <FrameLayout
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"/>
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/base_spacing"
+        android:background="@drawable/white_circle">
+
+        <ProgressBar
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center"/>
+
+    </FrameLayout>
+
 
 </RelativeLayout>
