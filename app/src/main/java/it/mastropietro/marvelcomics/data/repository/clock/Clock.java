@@ -6,4 +6,6 @@ package it.mastropietro.marvelcomics.data.repository.clock;
 
 public interface Clock {
     long getCurrentTimeInMillis();
+
+    boolean isCurrentTimeAfter(String timestampToCompare);
 }

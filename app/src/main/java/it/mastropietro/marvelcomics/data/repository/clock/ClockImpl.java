@@ -16,4 +16,8 @@ public class ClockImpl implements Clock {
     @Override public long getCurrentTimeInMillis() {
         return System.currentTimeMillis();
     }
+
+    @Override public boolean isCurrentTimeAfter(String timestampToCompare) {
+        return getCurrentTimeInMillis() > Long.valueOf(timestampToCompare);
+    }
 }
