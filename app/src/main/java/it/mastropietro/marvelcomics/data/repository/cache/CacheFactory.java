@@ -8,4 +8,6 @@ import okhttp3.Cache;
 
 public interface CacheFactory {
     Cache createCache();
+
+    CacheApi createSharedPrefCache();
 }

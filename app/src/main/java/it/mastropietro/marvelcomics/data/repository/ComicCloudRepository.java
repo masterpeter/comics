@@ -45,6 +45,10 @@ public class ComicCloudRepository implements ComicRepository {
                 .toSingle();
     }
 
+    @Override public void storeComics(List<Comic> comics, int offset) {
+        throw new UnsupportedOperationException("Store comics in the cloud is not supported");
+    }
+
     @NonNull
     private Single.OnSubscribe<List<ComicEntity>> comicEntityList(final int characterId, final int offset) {
         return new Single.OnSubscribe<List<ComicEntity>>() {
