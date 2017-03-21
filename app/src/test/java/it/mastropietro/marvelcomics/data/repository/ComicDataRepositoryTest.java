@@ -8,10 +8,11 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import it.mastropietro.marvelcomics.usecase.ComicRepository;
 import it.mastropietro.marvelcomics.model.Comic;
+import it.mastropietro.marvelcomics.usecase.ComicRepository;
 import rx.Single;
 import rx.observers.TestSubscriber;
 
@@ -30,12 +31,14 @@ public class ComicDataRepositoryTest {
     private ComicRepository comicRepository;
 
     @Mock ComicCloudRepository cloudRepository;
+    @Mock ComicDiskRepository diskRepository;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         when(cloudRepository.getComics(FAKE_CHARACTER_ID, 0)).thenReturn(getFakeComicsObservable());
-        comicRepository = new ComicDataRepository(cloudRepository);
+        when(diskRepository.getComics(FAKE_CHARACTER_ID, 0)).thenReturn(Single.just(Collections.<Comic>emptyList()));
+        comicRepository = new ComicDataRepository(cloudRepository, diskRepository);
     }
 
     @Test
@@ -45,6 +48,7 @@ public class ComicDataRepositoryTest {
         comics.subscribe(testSubscriber);
 
         verify(cloudRepository).getComics(FAKE_CHARACTER_ID, 0);
+        verify(diskRepository).getComics(FAKE_CHARACTER_ID, 0);
         assertNotNull(comics);
         testSubscriber.assertNoErrors();
 

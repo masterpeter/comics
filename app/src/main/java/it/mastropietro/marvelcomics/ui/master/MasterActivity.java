@@ -8,8 +8,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.Toast;
+import android.widget.FrameLayout;
 
 import java.util.List;
 
@@ -18,7 +17,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.mastropietro.marvelcomics.R;
-import it.mastropietro.marvelcomics.data.di.RepositoryModule;
+import it.mastropietro.marvelcomics.data.di.UtilsModule;
 import it.mastropietro.marvelcomics.model.Comic;
 import it.mastropietro.marvelcomics.ui.ComicGalleryPager;
 import it.mastropietro.marvelcomics.ui.detail.DetailActivity;
@@ -34,7 +33,7 @@ public class MasterActivity
 
     @BindView(R.id.master_comic_list) RecyclerView comicList;
     @BindView(R.id.master_toolbar) Toolbar masterToolbar;
-    @BindView(R.id.progress_bar) ProgressBar progressBar;
+    @BindView(R.id.progress_bar) FrameLayout progressBar;
     @Nullable @BindView(R.id.detail_view) DetailView detailView;
     @Nullable @BindView(R.id.detail_view_pager) ComicGalleryPager viewPager;
     @Inject MasterPresenter presenter;
@@ -62,7 +61,7 @@ public class MasterActivity
 
     private void initInject() {
         DaggerMasterComponent.builder()
-                .repositoryModule(new RepositoryModule(getApplicationContext()))
+                .utilsModule(new UtilsModule(getApplicationContext()))
                 .build()
                 .inject(this);
     }
@@ -102,7 +101,7 @@ public class MasterActivity
     }
 
     @Override public void showLoading() {
-        Toast.makeText(this, R.string.loading_data, Toast.LENGTH_SHORT).show();
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override public void showComicList(List<Comic> comicList) {

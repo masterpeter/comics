@@ -4,17 +4,20 @@ import android.support.annotation.NonNull;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import it.mastropietro.marvelcomics.model.Comic;
+import rx.Scheduler;
 import rx.Single;
 import rx.observers.TestSubscriber;
-import rx.schedulers.TestScheduler;
+import rx.schedulers.Schedulers;
 
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.verify;
@@ -26,33 +29,36 @@ import static org.mockito.Mockito.when;
 public class GetComicsFromCharacterTest {
 
     private static final int CHARACTER_ID = 12345;
-    private static final TestScheduler backgroundThread = new TestScheduler();
-    private static final TestScheduler mainThread = new TestScheduler();
+    private static final Scheduler backgroundThread = Schedulers.io();
+    private static final Scheduler mainThread = Schedulers.immediate();
 
     @Mock ComicRepository comicRepository;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        when(comicRepository.getComics(anyInt(), anyInt())).thenAnswer(getComicListAnswer());
-    }
-
-    @NonNull private Answer<Single<ArrayList<Comic>>> getComicListAnswer() {
-        return new Answer<Single<ArrayList<Comic>>>() {
-            @Override
-            public Single<ArrayList<Comic>> answer(InvocationOnMock invocation) throws Throwable {
-                return Single.just(new ArrayList<Comic>());
-            }
-        };
+        when(comicRepository.getComics(anyInt(), anyInt())).thenAnswer(getAnswer());
     }
 
     @Test
-    public void whenGetComicsUseCaseIsExecuted_comicRepositoryIsCalledToRetrieveObsevable() throws Exception {
+    public void whenGetComicsUseCaseIsExecuted_comicRepositoryIsCalledToRetrieveObservable() throws Exception {
         UseCase getComics = new GetComicsFromCharacter(CHARACTER_ID, comicRepository, backgroundThread, mainThread);
-        TestSubscriber subscriber = new TestSubscriber();
 
+        TestSubscriber subscriber = new TestSubscriber();
         getComics.execute(subscriber);
 
+        subscriber.awaitTerminalEvent();
+
         verify(comicRepository).getComics(anyInt(), anyInt());
+        verify(comicRepository).storeComics(ArgumentMatchers.<Comic>anyList(), anyInt());
+    }
+
+    @NonNull private Answer<Single<List<Comic>>> getAnswer() {
+        return new Answer<Single<List<Comic>>>() {
+            @Override
+            public Single<List<Comic>> answer(InvocationOnMock invocation) throws Throwable {
+                return Single.just(Collections.singletonList(new Comic.Builder().build()));
+            }
+        };
     }
 }
